@@ -7,6 +7,9 @@ export interface AuthContext_type {
     isLoggedIn: boolean
     setisLoggedIn: React.Dispatch<React.SetStateAction<boolean>>
     registerUser: (data: UserInfo) => Promise<any>;
+    loginUser: (data: UserInfo) => Promise<any>;
+    continueWithGithub: () => Promise<any>;
+    continueWithGoogle: () => Promise<any>;
 }
 
 export const Globalcontext = createContext<AuthContext_type | null>(null);

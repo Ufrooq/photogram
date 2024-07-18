@@ -12,16 +12,17 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useGlobalContext } from "@/context/Context"
 import { useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { toast } from "sonner"
 
 const Signup: React.FC = () => {
-    const { registerUser } = useGlobalContext()
+    const { registerUser, setisLoggedIn, continueWithGoogle } = useGlobalContext();
     const [userInfo, setuserInfo] = useState({
         email: "",
         password: "",
         confirmPassword: ""
-    })
+    });
+    const navigate = useNavigate();
 
 
     function handleonChange(e: any) {
@@ -31,18 +32,32 @@ const Signup: React.FC = () => {
 
     const handleSubmit = async (e: any) => {
         e.preventDefault();
-        if (userInfo.password !== userInfo.confirmPassword) {
-            toast.error("password and current password doesn't match !")
-            return
+        try {
+            if (userInfo.email == "" || userInfo.password == "" || userInfo.confirmPassword == "") {
+                toast.error("Please fill all the required fileds !")
+                return
+            }
+            if (userInfo.password !== userInfo.confirmPassword) {
+                toast.error("password and current password doesn't match !")
+                return
+            }
+            const response = await registerUser(userInfo)
+            if (response) {
+                setisLoggedIn(true)
+                navigate("/home")
+            }
+            console.log("response", response)
+        } catch (error) {
+            console.log(error)
         }
-        await registerUser(userInfo)
+
 
     }
 
 
 
     return (
-        <Card>
+        <Card className="shadow-lg">
             <CardHeader className="space-y-1">
                 <CardTitle className="text-2xl">Create an account</CardTitle>
                 <CardDescription>
@@ -50,12 +65,8 @@ const Signup: React.FC = () => {
                 </CardDescription>
             </CardHeader>
             <CardContent className="grid gap-4">
-                <div className="grid grid-cols-2 gap-6">
-                    <Button variant="custom" className="flex items-center">
-                        <Icons.gitHub className="mr-2 h-4 w-4" />
-                        Github
-                    </Button>
-                    <Button variant="custom">
+                <div className="grid gap-6">
+                    <Button onClick={continueWithGoogle} variant="custom">
                         <Icons.google className="mr-2 h-4 w-4" />
                         Google
                     </Button>

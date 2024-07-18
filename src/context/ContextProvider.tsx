@@ -1,21 +1,48 @@
 import { ReactNode, useState } from 'react'
 import { AuthContext_type, Globalcontext } from './Context';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '@/config/firebaseConfig';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
+import { auth, githubProvider, googleProvider } from '@/config/firebaseConfig';
 import { UserInfo } from './types';
+
 
 
 
 const ContextProvider = ({ children }: { children: ReactNode }) => {
 
 
-    const [isLoggedIn, setisLoggedIn] = useState(false);
+    const [isLoggedIn, setisLoggedIn] = useState<boolean>(false)
 
-    const registerUser = async (data: UserInfo) => {
+
+    const continueWithGoogle = async () => {
+        try {
+            await signInWithPopup(auth, googleProvider);
+            setisLoggedIn(true)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    const continueWithGithub = async () => {
+        try {
+            await githubProvider;
+            setisLoggedIn(true)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    const loginUser = async (data: UserInfo) => {
         try {
 
-            console.log(data.email, data.password)
+            const response = await signInWithEmailAndPassword(auth, data.email, data.password)
+            return response;
 
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    const registerUser = async (data: UserInfo) => {
+        try {
+            const response = await createUserWithEmailAndPassword(auth, data.email, data.password);
+            return response
         } catch (error) {
             console.log(error);
         }
@@ -27,7 +54,10 @@ const ContextProvider = ({ children }: { children: ReactNode }) => {
         setisLoggedIn,
 
         // functions ---------->
-        registerUser
+        registerUser,
+        loginUser,
+        continueWithGithub,
+        continueWithGoogle
     }
     return (
         <Globalcontext.Provider value={contextValues}>
