@@ -5,11 +5,12 @@ const Welcome = () => {
     return (
         <div className='p-6'>
             <div>
-                <i className="fa-brands fa-product-hunt text-5xl"></i>
-                <h1 className='font-bold text-5xl'>Welcome to Photogram</h1>
                 <h3 className='font-base text-xl leading-normal'>
                     Capture, edit, and share your moments effortlessly with Photogram.
                 </h3>
+                <i className="fa-brands fa-product-hunt text-5xl"></i>
+                <h1 className='font-bold text-5xl'>Welcome to Photogram</h1>
+
             </div>
             <div>
                 <p className='mt-10'>
