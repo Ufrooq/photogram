@@ -1,13 +1,13 @@
+import { useGlobalContext } from '@/context/Context'
 import React from 'react'
-import { Outlet } from 'react-router-dom'
+import { Navigate, Outlet } from 'react-router-dom'
 
 const ProtectedLayout: React.FC = () => {
+    const { isLoggedIn } = useGlobalContext()
     return (
-        <div>
-            {/* <Navbar /> */}
-            <Outlet />
-        </div>
+        isLoggedIn ? <Outlet /> : < Navigate to="/login" />
     )
+
 }
 
 export default ProtectedLayout
