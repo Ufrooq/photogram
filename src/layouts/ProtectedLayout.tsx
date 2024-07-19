@@ -3,6 +3,8 @@ import { getAuth } from 'firebase/auth'
 import React from 'react'
 import { Navigate, Outlet } from 'react-router-dom'
 import { useAuthState } from "react-firebase-hooks/auth";
+import Navbar from '@/components/Navbar';
+import Sidebar from '@/components/Sidebar';
 
 const ProtectedLayout: React.FC = () => {
     const auth = getAuth();
@@ -16,10 +18,20 @@ const ProtectedLayout: React.FC = () => {
             </div>
         )
     }
-    return (
-        user ? <Outlet /> : < Navigate to="/login" />
-    )
-
+    else {
+        return (
+            user ?
+                <div className='flex gap-2'>
+                    <Sidebar />
+                    <div>
+                        <Navbar />
+                        <Outlet />
+                    </div>
+                </div>
+                :
+                < Navigate to="/login" />
+        )
+    }
 
 }
 
