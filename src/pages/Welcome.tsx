@@ -1,9 +1,11 @@
 import { Button } from '@/components/ui/button'
 import mesh_img from "../assets/undraw_landing_page_re_6xev.svg"
+import { Navigate, useNavigate } from 'react-router-dom'
 
 const Welcome = () => {
+    const navigate = useNavigate()
     return (
-        <div className='flex h-[96vh] items-center justify-around gap-4 p-4'>
+        <div className='flex h-[96vh] items-center justify-around p-4'>
             <div className='p-4 w-[40%] flex flex-col gap-4'>
                 <div className='flex flex-col gap-4'>
                     <i className="fa-brands fa-product-hunt text-8xl"></i>
@@ -11,7 +13,7 @@ const Welcome = () => {
                     <p className='leading-6 text-justify'>
                         Join Photogram and experience the joy of capturing and sharing life's beautiful moments. Unleash your creativity with our intuitive tools and vibrant community. Discover a platform designed to inspire and connect photographers of all skill levels. With powerful editing features and seamless sharing options, your photos will always look their best. Start your journey with Photogram today and turn every snapshot into a masterpiece.
                     </p>
-                    <Button variant="custom" className='self-start px-6 text-md font-semibold'>Explore More</Button>
+                    <Button onClick={() => navigate("/home")} variant="custom" className='self-start px-6 text-md font-semibold'>Explore More</Button>
                 </div>
             </div>
             <div className='w-[40%]'>
