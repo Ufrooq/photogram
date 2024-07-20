@@ -1,4 +1,5 @@
 import React from 'react'
+import { NavLink } from 'react-router-dom'
 
 const Sidebar = () => {
 
@@ -57,20 +58,33 @@ const Sidebar = () => {
 
     ]
     return (
-        <aside className='py-8 px-4 bg-slate-300 w-[280px] h-screen'>
+        <aside className='py-8 px-4 bg-slate-200 w-[300px] h-screen'>
             <div className='h-[100vh] flex flex-col gap-4'>
-                <div className='py-2 px-4 flex items-center gap-2 text-purple-900'>
-                    <i className="fa-brands fa-product-hunt text-5xl rotate-45"></i>
+                <div className='py-2 px-4 flex items-center gap-2 text-purple-800'>
+                    <i className="fa-brands fa-product-hunt text-5xl rotate-180"></i>
                     <h1 className='font-bold text-2xl'>
                         Photogram
                     </h1>
                 </div>
-                {sideBarItems.map((item) => (
-                    <div className='text-[20px] flex items-center gap-6 py-2 px-4 hover:bg-slate-200 cursor-pointer rounded-lg'>
-                        <i className={`fa-solid ${item.icon} w-[20px]`}></i>
-                        <p className='font-medium'>{item.name}</p>
-                    </div>
-                ))}
+                {sideBarItems.map((item) => {
+                    return (
+                        <NavLink
+                            to={item.link || "/"}
+                            className={({ isActive }) =>
+                                isActive
+                                    ? "text-[20px] flex items-center gap-5 py-2 px-4 hover:bg-white cursor-pointer rounded-lg transition bg-white"
+                                    : "text-[20px] flex items-center gap-5 py-2 px-4 hover:bg-white cursor-pointer rounded-lg transition"
+                            }
+                        >
+                            <i className={`fa-solid ${item.icon} w-[20px]`}></i>
+                            <p className='font-medium'>{item.name}</p>
+                            {(item.name == "Notifications" || item.name == "Settings")
+                                &&
+                                <span className='w-2 h-2 bg-purple-600 ms-auto rounded-[50%]'></span>
+                            }
+                        </NavLink>
+                    )
+                })}
             </div>
             <div>
 
