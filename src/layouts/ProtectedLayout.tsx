@@ -21,11 +21,13 @@ const ProtectedLayout: React.FC = () => {
     else {
         return (
             user ?
-                <div className='flex gap-2'>
+                <div className='w-full h-screen flex'>
                     <Sidebar />
-                    <div>
+                    <div className='w-full h-screen'>
                         <Navbar />
-                        <Outlet />
+                        <div className='p-[32px]'>
+                            <Outlet />
+                        </div>
                     </div>
                 </div>
                 :

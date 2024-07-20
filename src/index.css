@@ -59,6 +59,13 @@
   }
 }
 
+@layer components {
+  .page_heading {
+  }
+  .page_sub_heading {
+  }
+}
+
 @layer base {
   * {
     @apply border-border;

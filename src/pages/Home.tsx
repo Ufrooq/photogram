@@ -2,7 +2,9 @@ import React from 'react'
 
 const Home: React.FC = () => {
     return (
-        <div>Home</div>
+        <div>
+            <h1 className='page_heading'>Home</h1>
+        </div>
     )
 }
 

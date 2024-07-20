@@ -58,7 +58,7 @@ const Sidebar = () => {
 
     ]
     return (
-        <aside className='py-8 px-4 bg-slate-200 w-[300px] h-screen'>
+        <aside className='py-8 px-4 bg-slate-200 w-[340px] h-screen'>
             <div className='h-[100vh] flex flex-col gap-4'>
                 <div className='py-2 px-4 flex items-center gap-2 text-purple-800'>
                     <i className="fa-brands fa-product-hunt text-5xl rotate-180"></i>
