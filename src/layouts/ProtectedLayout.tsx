@@ -25,7 +25,7 @@ const ProtectedLayout: React.FC = () => {
                     <Sidebar />
                     <div className='w-full h-screen'>
                         <Navbar />
-                        <div className='p-[32px]'>
+                        <div className='p-[24px]'>
                             <Outlet />
                         </div>
                     </div>

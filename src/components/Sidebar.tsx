@@ -62,7 +62,7 @@ const Sidebar = () => {
             <div className='h-[100vh] flex flex-col gap-4'>
                 <div className='py-2 px-4 flex items-center gap-2 text-purple-800'>
                     <i className="fa-brands fa-product-hunt text-5xl rotate-180"></i>
-                    <h1 className='font-bold text-2xl'>
+                    <h1 className='font-extrabold text-2xl'>
                         Photogram
                     </h1>
                 </div>
@@ -76,7 +76,7 @@ const Sidebar = () => {
                                     : "text-[20px] flex items-center gap-5 py-2 px-4 hover:bg-white cursor-pointer rounded-lg transition"
                             }
                         >
-                            <i className={`fa-solid ${item.icon} w-[20px]`}></i>
+                            <i className={`fa-solid ${item.icon} w-[20px] text-xl`}></i>
                             <p className='font-medium'>{item.name}</p>
                             {(item.name == "Notifications" || item.name == "Settings")
                                 &&

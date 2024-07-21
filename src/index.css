@@ -61,8 +61,14 @@
 
 @layer components {
   .page_heading {
+    @apply text-3xl font-extrabold;
   }
   .page_sub_heading {
+    @apply text-lg mt-1 text-slate-700;
+  }
+
+  .page_content_container {
+    @apply w-full rounded-2xl px-8 py-6 mt-6 relative z-10;
   }
 }
 
