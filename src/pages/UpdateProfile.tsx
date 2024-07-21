@@ -1,6 +1,7 @@
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
+import { Textarea } from '@/components/ui/textarea'
 import { Label } from '@radix-ui/react-label'
 import React from 'react'
 import { Link } from 'react-router-dom'
@@ -35,19 +36,24 @@ const UpdateProfile = () => {
                                     <Input id="fname" type="text" placeholder="Enter" />
                                 </div>
                                 <div className="grid gap-2">
-                                    <Label htmlFor="email">Email</Label>
-                                    <Input id="email" type="email" placeholder="umar@example.com" />
-
-                                </div>
-                            </div>
-                            <div className='flex-1 flex flex-col gap-4'>
-                                <div className="grid gap-2">
                                     <Label htmlFor="fname">Last Name</Label>
                                     <Input id="fname" type="text" placeholder="Enter" />
                                 </div>
                                 <div className="grid gap-2">
-                                    <Label htmlFor="password">Password</Label>
-                                    <Input id="password" type="password" />
+                                    <Label htmlFor="email">Email</Label>
+                                    <Input id="email" type="email" placeholder="umar@example.com" />
+                                </div>
+                            </div>
+                            <div className='flex-1 flex flex-col gap-4 self-start'>
+                                <div className="grid gap-2">
+                                    <Label htmlFor="password">Bio</Label>
+                                    <textarea
+                                        id="password"
+                                        className='border border-slate-400 px-4 py-3 rounded-lg h-[216px]'
+                                        rows={8}
+                                        placeholder="Enter a biography for your profofile"
+
+                                    />
                                 </div>
                             </div>
                         </div>

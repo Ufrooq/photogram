@@ -1,5 +1,7 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
+import { ScrollArea } from "@/components/ui/scroll-area"
+
 
 const Sidebar = () => {
 
@@ -46,6 +48,11 @@ const Sidebar = () => {
             icon: "fa-inbox"
         },
         {
+            name: "Community",
+            link: "/community",
+            icon: "fa-user-group"
+        },
+        {
             name: "Settings",
             link: "/",
             icon: "fa-gear"
@@ -58,9 +65,9 @@ const Sidebar = () => {
 
     ]
     return (
-        <aside className='py-8 px-4 bg-slate-200 w-[340px] h-screen'>
+        <ScrollArea className='py-8 px-4 h-full w-[350px] rounded-md border'>
             <div className='h-[100vh] flex flex-col gap-4'>
-                <div className='py-2 px-4 flex items-center gap-2 text-purple-800'>
+                <div className='py-4 px-4 flex items-center gap-2 text-purple-800'>
                     <i className="fa-brands fa-product-hunt text-5xl rotate-180"></i>
                     <h1 className='font-extrabold text-2xl'>
                         Photogram
@@ -72,8 +79,8 @@ const Sidebar = () => {
                             to={item.link || "/"}
                             className={({ isActive }) =>
                                 isActive
-                                    ? "text-[20px] flex items-center gap-5 py-2 px-4 hover:bg-white cursor-pointer rounded-lg transition bg-white"
-                                    : "text-[20px] flex items-center gap-5 py-2 px-4 hover:bg-white cursor-pointer rounded-lg transition"
+                                    ? "text-[20px] flex items-center gap-5 py-2 px-4 hover:bg-slate-200 cursor-pointer rounded-lg transition bg-slate-200"
+                                    : "text-[20px] flex items-center gap-5 py-2 px-4 hover:bg-slate-200 cursor-pointer rounded-lg transition"
                             }
                         >
                             <i className={`fa-solid ${item.icon} w-[20px] text-xl`}></i>
@@ -86,10 +93,7 @@ const Sidebar = () => {
                     )
                 })}
             </div>
-            <div>
-
-            </div>
-        </aside >
+        </ScrollArea >
     )
 }
 

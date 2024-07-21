@@ -14,6 +14,7 @@ import MyPosts from "@/pages/MyPosts";
 import AccountLayout from "@/layouts/AccountLayout";
 import UpdateProfile from "@/pages/UpdateProfile";
 import ProfileInfo from "@/pages/ProfileInfo";
+import Community from "@/pages/Community";
 
 const RouterMain = createBrowserRouter([
     {
@@ -59,6 +60,10 @@ const RouterMain = createBrowserRouter([
                     {
                         path: PROTECTED_ROUTES.postsPage,
                         element: <MyPosts />
+                    },
+                    {
+                        path: PROTECTED_ROUTES.communityPage,
+                        element: <Community />
                     },
                     {
                         path: PROTECTED_ROUTES.profilePage,

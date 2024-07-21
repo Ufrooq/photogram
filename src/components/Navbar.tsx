@@ -7,7 +7,7 @@ const Navbar = () => {
 
     const [showDialogue, setshowDialogue] = useState<boolean>(false);
     return (
-        <nav className="w-full h-[80px]  px-6 flex items-center relative">
+        <nav className="w-full h-[80px] px-6 flex items-center relative shadow-sm">
             <button
                 className="flex items-center gap-4 shadow-md ms-auto p-1 pe-4 rounded-[30px] bg-slate-100 cursor-pointer"
                 onClick={() => setshowDialogue(!showDialogue)}
