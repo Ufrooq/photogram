@@ -10,8 +10,10 @@ import Signup from "@/pages/Signup";
 import ProtectedLayout from "@/layouts/ProtectedLayout";
 import Home from "@/pages/Home";
 import CreatePost from "@/pages/CreatePost";
-import Profile from "@/pages/Profile";
 import MyPosts from "@/pages/MyPosts";
+import AccountLayout from "@/layouts/AccountLayout";
+import UpdateProfile from "@/pages/UpdateProfile";
+import ProfileInfo from "@/pages/ProfileInfo";
 
 const RouterMain = createBrowserRouter([
     {
@@ -55,13 +57,24 @@ const RouterMain = createBrowserRouter([
                         element: <CreatePost />
                     },
                     {
-                        path: PROTECTED_ROUTES.profilePage,
-                        element: <Profile />
-                    },
-                    {
                         path: PROTECTED_ROUTES.postsPage,
                         element: <MyPosts />
-                    }
+                    },
+                    {
+                        path: PROTECTED_ROUTES.profilePage,
+                        element: <AccountLayout />,
+                        children: [
+                            {
+                                index: true,
+                                element: <ProfileInfo />
+                            },
+                            {
+                                path: `${PROTECTED_ROUTES.profilePage}/${PROTECTED_ROUTES.updateAccountInfo}`,
+                                element: <UpdateProfile />
+                            }
+
+                        ]
+                    },
                 ]
             }
 

@@ -14,5 +14,7 @@ export const PROTECTED_ROUTES = {
     createPage: "/create-post",
     profilePage: "/profile",
     postsPage: "/posts",
+    updateAccountInfo: "/update-profile",
+
 }
 
