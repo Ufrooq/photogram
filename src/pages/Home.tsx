@@ -1,7 +1,8 @@
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel'
 import React from 'react'
-import Community from './Community'
 import Post from '@/components/Post'
+import People from '@/components/People'
+import { Separator } from '@/components/ui/separator'
 
 const Home: React.FC = () => {
 
@@ -22,7 +23,7 @@ const Home: React.FC = () => {
     ]
     return (
         <div className='flex gap-12'>
-            <div className='p-10'>
+            <div className='px-10 py-4'>
                 <Carousel>
                     <CarouselContent className='gap-4'>
                         {storyImageLinks.map((item) => (
@@ -38,13 +39,21 @@ const Home: React.FC = () => {
                     <CarouselPrevious />
                     <CarouselNext />
                 </Carousel>
-                <div className='p-2 mt-4 flex justify-center'>
+                <div className='p-2 mt-6 flex flex-col justify-center items-center'>
+                    <Post />
+                    <Post />
+                    <Post />
+                    <Post />
+                    <Post />
                     <Post />
                 </div>
             </div>
 
-            <div>
-                <Community />
+            <div
+                style={{ boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px" }}
+                className='rounded-xl h-[600px]'
+            >
+                <People />
             </div>
         </div>
     )

@@ -48,8 +48,8 @@ const Sidebar = () => {
             icon: "fa-inbox"
         },
         {
-            name: "Community",
-            link: "/community",
+            name: "Friends",
+            link: "/friends",
             icon: "fa-user-group"
         },
         {

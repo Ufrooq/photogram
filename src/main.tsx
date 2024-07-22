@@ -5,11 +5,14 @@ import { RouterProvider } from 'react-router-dom'
 import RouterMain from './router/index.routes.tsx'
 import { Toaster } from 'sonner'
 import ContextProvider from './context/ContextProvider.tsx'
+import { StrictMode } from 'react'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <ContextProvider>
-    <RouterProvider router={RouterMain} />
-    <Toaster position="bottom-right" richColors closeButton />,
-  </ContextProvider>
+  <StrictMode>
+    <ContextProvider>
+      <RouterProvider router={RouterMain} />
+      <Toaster position="bottom-right" richColors closeButton />,
+    </ContextProvider>
+  </StrictMode>
 
 )
