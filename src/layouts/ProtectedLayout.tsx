@@ -23,7 +23,7 @@ const ProtectedLayout: React.FC = () => {
             user ?
                 <div className='w-full h-screen flex'>
                     <Sidebar />
-                    <div className='w-full h-screen'>
+                    <div className='w-full h-screen ml-[320px]'>
                         <Navbar />
                         <div className='p-[24px]'>
                             <Outlet />

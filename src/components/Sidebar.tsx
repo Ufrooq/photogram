@@ -1,6 +1,5 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
-import { ScrollArea } from "@/components/ui/scroll-area"
 
 
 const Sidebar = () => {
@@ -65,7 +64,7 @@ const Sidebar = () => {
 
     ]
     return (
-        <ScrollArea className='py-8 px-4 h-full w-[350px] rounded-md border'>
+        <aside className='py-8 px-4 h-full w-[320px] rounded-md border fixed z-20 bg-white'>
             <div className='h-[100vh] flex flex-col gap-4'>
                 <div className='py-4 px-4 flex items-center gap-2 text-purple-800'>
                     <i className="fa-brands fa-product-hunt text-5xl rotate-180"></i>
@@ -93,7 +92,7 @@ const Sidebar = () => {
                     )
                 })}
             </div>
-        </ScrollArea >
+        </aside >
     )
 }
 
