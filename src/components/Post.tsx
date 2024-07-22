@@ -11,7 +11,7 @@ const Post = () => {
                         <AvatarImage className='h-full' src="https://cdn.pixabay.com/photo/2023/03/08/15/23/lake-7838004_960_720.jpg" />
                     </Avatar>
                     <div>
-                        <p className="text-sm font-medium leading-none">Sofia Davis</p>
+                        <p className="text-sm font-medium leading-none">Sofia Davi</p>
                         <p className="text-sm text-muted-foreground">m@example.com</p>
                     </div>
                     <p></p>
