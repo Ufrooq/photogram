@@ -1,3 +1,4 @@
+import FileUploader from '@/components/FileUploader';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@radix-ui/react-label';
@@ -26,10 +27,11 @@ const CreatePost = () => {
                                 placeholder='Enter a suitable description for your post '
                             ></textarea>
                         </div>
-                        <div className="flex w-full items-center p-4 text-lg">
+                        {/* <div className="flex w-full items-center p-4 text-lg">
                             <Label htmlFor="picture" className='text-md w-[16%] font-medium text-slate-700'>Upload a Picture : </Label>
                             <Input id="picture" type="file" />
-                        </div>
+                        </div> */}
+                        <FileUploader />
                         <div className='w-full p-4 flex justify-end text-xl'>
                             <Button type='submit' variant={"custom"} className='px-6 py-2 gap-3 text-lg'>
                                 Create Post
