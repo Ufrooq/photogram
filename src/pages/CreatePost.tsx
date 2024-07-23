@@ -1,10 +1,17 @@
 import FileUploader from '@/components/FileUploader';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { useGlobalContext } from '@/context/Context';
+import { FileEntry } from '@/context/types';
 import { Label } from '@radix-ui/react-label';
 
 
 const CreatePost = () => {
+
+    const { currentUser } = useGlobalContext();
+    const [fileEntery, setfileEntery] = useState<FileEntry>({
+        files: []
+    })
     return (
         <div>
             <div>
@@ -27,11 +34,10 @@ const CreatePost = () => {
                                 placeholder='Enter a suitable description for your post '
                             ></textarea>
                         </div>
-                        {/* <div className="flex w-full items-center p-4 text-lg">
-                            <Label htmlFor="picture" className='text-md w-[16%] font-medium text-slate-700'>Upload a Picture : </Label>
-                            <Input id="picture" type="file" />
-                        </div> */}
-                        <FileUploader />
+                        <div className="flex w-full items-center p-4 text-lg">
+                            <Label className='text-md w-[16%] font-medium text-slate-700'>Upload a Picture : </Label>
+                            <FileUploader />
+                        </div>
                         <div className='w-full p-4 flex justify-end text-xl'>
                             <Button type='submit' variant={"custom"} className='px-6 py-2 gap-3 text-lg'>
                                 Create Post

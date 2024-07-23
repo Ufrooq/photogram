@@ -10,6 +10,8 @@ export interface AuthContext_type {
     loginUser: (data: UserInfo) => Promise<any>;
     continueWithGithub: () => Promise<any>;
     continueWithGoogle: () => Promise<any>;
+    currentUser: any;
+    // setcurrentUser: React.Dispatch<any>;
 }
 
 export const Globalcontext = createContext<AuthContext_type | null>(null);

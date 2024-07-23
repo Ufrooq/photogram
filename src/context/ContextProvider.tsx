@@ -1,6 +1,6 @@
 import { ReactNode, useState } from 'react'
 import { AuthContext_type, Globalcontext } from './Context';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, onAuthStateChanged } from 'firebase/auth';
 import { auth, githubProvider, googleProvider } from '@/config/firebaseConfig';
 import { UserInfo } from './types';
 
@@ -11,6 +11,7 @@ const ContextProvider = ({ children }: { children: ReactNode }) => {
 
 
     const [isLoggedIn, setisLoggedIn] = useState<boolean>(false)
+    const [currentUser, setcurrentUser] = useState<any>()
 
 
     const continueWithGoogle = async () => {
@@ -48,10 +49,19 @@ const ContextProvider = ({ children }: { children: ReactNode }) => {
         }
     }
 
+
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+            setcurrentUser(setcurrentUser);
+        } else {
+            console.log("user not found !")
+        }
+    })
     const contextValues: AuthContext_type = {
         // states ------->
         isLoggedIn,
         setisLoggedIn,
+        currentUser,
 
         // functions ---------->
         registerUser,
