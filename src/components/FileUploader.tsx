@@ -1,30 +1,75 @@
-import React, { useState } from 'react';
-import { FileUploaderRegular } from "@uploadcare/react-uploader"
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { OutputFileEntry } from '@uploadcare/blocks';
+import { FileUploaderRegular, type UploadCtxProvider } from '@uploadcare/react-uploader';
 import '@uploadcare/react-uploader/core.css';
 
 
-const FileUploader = () => {
-    const [files, setFiles] = useState<any>();
+type FileUploaderProps = {
+    files: OutputFileEntry[];
+    onChange: (files: OutputFileEntry[]) => void;
+}
 
-    const handleChangeEvent = (items: any) => {
-        setFiles([...items.allEntries.filter((file: any) => file.status === 'success')]);
+
+function FileUploader({ files, onChange }: FileUploaderProps) {
+    const [uploadedFiles, setUploadedFiles] = useState<OutputFileEntry<'success'>[]>([]);
+    const ctxProviderRef = useRef<InstanceType<UploadCtxProvider>>(null);
+
+
+    const handleRemoveClick = useCallback(
+        (uuid: OutputFileEntry['uuid']) => onChange(files.filter(f => f.uuid !== uuid)),
+        [files, onChange],
+    );
+
+    const resetUploaderState = () => ctxProviderRef.current?.uploadCollection.clearAll();
+
+    const handleModalCloseEvent = () => {
+        resetUploaderState();
+
+        onChange([...files, ...uploadedFiles])
+
+        setUploadedFiles([]);
     };
+
+
+    const handleChangeEvent = (files: any) => {
+        setUploadedFiles([...files.allEntries.filter((f: any) => f.status === 'success')] as OutputFileEntry<'success'>[]);
+    }
 
     return (
         <div>
-            <FileUploaderRegular onChange={handleChangeEvent} pubkey="efda7de35f1db04b8da4" />
-
+            <FileUploaderRegular
+                imgOnly
+                multiple
+                removeCopyright
+                confirmUpload={false}
+                apiRef={ctxProviderRef}
+                onModalClose={handleModalCloseEvent}
+                onChange={handleChangeEvent}
+                pubkey="efda7de35f1db04b8da4"
+            />
             <div>
-                {/* {files.map((file: any) => (
-                    <div key={file}>
+                {files.map((file) => (
+                    <div key={file.uuid}>
                         <img
-                            src={file.cdnUrl}
-                            alt={file.fileInfo.originalFilename}
+                            className='w-44 h-444'
+                            key={file.uuid}
+                            src={`${file.cdnUrl}/-/preview/-/resize/x200/`}
+                            width="100"
+                            alt={file.fileInfo?.originalFilename || ''}
+                            title={file.fileInfo?.originalFilename || ''}
                         />
+
+                        <button
+                            type="button"
+                            onClick={() => handleRemoveClick(file.uuid)}
+                        >×
+                        </button>
                     </div>
-                ))} */}
+                ))}
             </div>
         </div>
     );
-};
+}
+
+
 export default FileUploader;

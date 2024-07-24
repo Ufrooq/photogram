@@ -2,7 +2,8 @@ import { ReactNode, useState } from 'react'
 import { AuthContext_type, Globalcontext } from './Context';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, onAuthStateChanged } from 'firebase/auth';
 import { auth, githubProvider, googleProvider } from '@/config/firebaseConfig';
-import { UserInfo } from './types';
+import { photoMeta, UserInfo } from './types';
+import { OutputFileEntry } from '@uploadcare/react-uploader';
 
 
 
@@ -12,6 +13,7 @@ const ContextProvider = ({ children }: { children: ReactNode }) => {
 
     const [isLoggedIn, setisLoggedIn] = useState<boolean>(false)
     const [currentUser, setcurrentUser] = useState<any>()
+    const [files, setFiles] = useState<OutputFileEntry[]>();
 
 
     const continueWithGoogle = async () => {
@@ -62,6 +64,8 @@ const ContextProvider = ({ children }: { children: ReactNode }) => {
         isLoggedIn,
         setisLoggedIn,
         currentUser,
+        files,
+        setFiles,
 
         // functions ---------->
         registerUser,

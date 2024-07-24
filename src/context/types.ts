@@ -6,7 +6,7 @@ export type UserInfo = {
     confirmPassword?: string
 }
 
-export interface fileEntery {
+export interface FileEntry {
     files: OutputFileEntry[];
 }
 
@@ -23,3 +23,4 @@ export interface photoMeta {
     uuid: string;
 
 }
+
