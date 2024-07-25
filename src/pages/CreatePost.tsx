@@ -2,7 +2,7 @@ import FileUploader from '@/components/FileUploader';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useGlobalContext } from '@/context/Context';
-import { FileEntry, post } from '@/context/types';
+import { FileEntry, photoMeta, post } from '@/context/types';
 import { Label } from '@radix-ui/react-label';
 import { OutputFileEntry } from '@uploadcare/react-uploader';
 import { useState } from 'react';
@@ -25,8 +25,18 @@ const CreatePost = () => {
 
     function handleSubmit(e: React.MouseEvent<HTMLFormElement>) {
         e.preventDefault();
-        console.log("File entry is : ", fileEntry);
-        console.log("New created post is : ", post);
+        const photosArray: photoMeta[] = fileEntry.map((file: any) => (
+            { cdnUrl: file.cdnUrl, uuid: file.uuid }
+        ))
+        if (currentUser) {
+            const newPost: post = {
+                ...post,
+                photos: photosArray,
+                userId: currentUser.uid,
+
+            }
+            console.log("New Post : ", newPost)
+        }
 
     }
 
@@ -52,7 +62,7 @@ const CreatePost = () => {
                                 rows={8}
                                 id=""
                                 className='outline-none p-4 resize-none text-lg'
-                                placeholder='Enter a suitable description for your post '
+                                placeholder='Enter a suitable caption for your post '
                                 value={post.caption}
                                 onChange={(e) => setpost({ ...post, caption: e.target.value })}
                             ></textarea>

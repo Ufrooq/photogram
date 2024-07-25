@@ -54,7 +54,7 @@ const ContextProvider = ({ children }: { children: ReactNode }) => {
 
     onAuthStateChanged(auth, (user) => {
         if (user) {
-            setcurrentUser(setcurrentUser);
+            setcurrentUser(user);
         } else {
             console.log("user not found !")
         }
