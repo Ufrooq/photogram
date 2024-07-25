@@ -57,8 +57,7 @@ const CreatePost = () => {
                                 onChange={(e) => setpost({ ...post, caption: e.target.value })}
                             ></textarea>
                         </div>
-                        <div className="flex w-full items-center p-4 text-lg">
-                            <Label className='text-md w-[16%] font-medium text-slate-700'>Upload a Picture : </Label>
+                        <div className="w-full">
                             <FileUploader files={fileEntry} onChange={setFileEntry} />
                         </div>
                         <div className='w-full p-4 flex justify-end text-xl'>

@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { OutputFileEntry } from '@uploadcare/blocks';
 import { FileUploaderRegular, type UploadCtxProvider } from '@uploadcare/react-uploader';
 import '@uploadcare/react-uploader/core.css';
+import { Label } from '@radix-ui/react-label';
 
 
 type FileUploaderProps = {
@@ -36,30 +37,32 @@ function FileUploader({ files, onChange }: FileUploaderProps) {
     }
 
     return (
-        <div>
-            <FileUploaderRegular
-                imgOnly
-                multiple
-                removeCopyright
-                confirmUpload={false}
-                apiRef={ctxProviderRef}
-                onModalClose={handleModalCloseEvent}
-                onChange={handleChangeEvent}
-                pubkey="efda7de35f1db04b8da4"
-            />
-            <div>
+        <div className='flex flex-col gap-4'>
+            <div className='flex w-full items-center p-4 text-lg'>
+                <Label className='text-md w-[16%] font-medium text-slate-700'>Upload a Picture : </Label>
+                <FileUploaderRegular
+                    imgOnly
+                    multiple
+                    removeCopyright
+                    confirmUpload={false}
+                    apiRef={ctxProviderRef}
+                    onModalClose={handleModalCloseEvent}
+                    onChange={handleChangeEvent}
+                    pubkey="efda7de35f1db04b8da4"
+                />
+            </div>
+            <div className='w-full p-4 grid max-w-[400px]'>
                 {files.map((file) => (
-                    <div key={file.uuid}>
+                    <div key={file.uuid} className='relative'>
                         <img
-                            className='w-44 h-444'
                             key={file.uuid}
                             src={`${file.cdnUrl}/-/preview/-/resize/x200/`}
-                            width="100"
                             alt={file.fileInfo?.originalFilename || ''}
                             title={file.fileInfo?.originalFilename || ''}
                         />
 
                         <button
+                            className='absolute top-0 right-0 text-2xl w-6 h-6 flex justify-center items-center rounded-[50%] bg-black text-white'
                             type="button"
                             onClick={() => handleRemoveClick(file.uuid)}
                         >×
