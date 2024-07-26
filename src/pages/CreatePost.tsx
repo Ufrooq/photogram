@@ -1,18 +1,22 @@
 import FileUploader from '@/components/FileUploader';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { auth } from '@/config/firebaseConfig';
 import { useGlobalContext } from '@/context/Context';
 import { FileEntry, photoMeta, post } from '@/context/types';
+import { createPost } from '@/services/post.service';
 import { Label } from '@radix-ui/react-label';
 import { OutputFileEntry } from '@uploadcare/react-uploader';
 import { useState } from 'react';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'sonner';
 
 
 const CreatePost = () => {
-
-    const { currentUser } = useGlobalContext();
+    const [user, loading] = useAuthState(auth);
     const [fileEntry, setFileEntry] = useState<OutputFileEntry[]>([]);
-
+    const navigate = useNavigate()
     const [post, setpost] = useState<post>({
         caption: "",
         photos: [],
@@ -23,19 +27,30 @@ const CreatePost = () => {
     })
 
 
-    function handleSubmit(e: React.MouseEvent<HTMLFormElement>) {
+    async function handleSubmit(e: React.MouseEvent<HTMLFormElement>) {
         e.preventDefault();
         const photosArray: photoMeta[] = fileEntry.map((file: any) => (
             { cdnUrl: file.cdnUrl, uuid: file.uuid }
         ))
-        if (currentUser) {
+        if (user) {
             const newPost: post = {
                 ...post,
                 photos: photosArray,
-                userId: currentUser.uid,
+                userId: user.uid,
 
             }
             console.log("New Post : ", newPost)
+            try {
+                await createPost(newPost);
+                toast.success("Post Created Successfully !")
+                navigate("/home");
+            } catch (error) {
+                toast.error("User is not logged In !")
+                navigate("/home");
+            }
+        } else {
+            toast.error("User is not logged In !")
+            navigate("/home");
         }
 
     }

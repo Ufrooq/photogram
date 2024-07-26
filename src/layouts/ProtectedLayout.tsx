@@ -9,7 +9,6 @@ import Sidebar from '@/components/Sidebar';
 const ProtectedLayout: React.FC = () => {
     const auth = getAuth();
     const [user, loading] = useAuthState(auth);
-    const { isLoggedIn } = useGlobalContext()
 
     if (loading) {
         return (
@@ -19,6 +18,7 @@ const ProtectedLayout: React.FC = () => {
         )
     }
     else {
+        console.log(user)
         return (
             user ?
                 <div className='w-full h-screen flex'>

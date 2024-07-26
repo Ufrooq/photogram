@@ -1,11 +1,16 @@
 import { useState } from "react"
 import { Button } from "./ui/button";
 import { useNavigate } from "react-router-dom";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "@/config/firebaseConfig";
 
 const Navbar = () => {
     const navigate = useNavigate()
 
     const [showDialogue, setshowDialogue] = useState<boolean>(false);
+    const [user] = useAuthState(auth);
+
+
     return (
         <nav className="w-full h-[80px] px-6 flex items-center relative shadow-sm">
             <button
@@ -22,8 +27,8 @@ const Navbar = () => {
                     <div className="flex gap-2 items-center">
                         <i className="fa-solid fa-circle-user text-[50px] text-purple-700"></i>
                         <div>
-                            <p className="font-bold text-sm">Hi Umar !</p>
-                            <p className="italic text-sm text-slate-700">umarf9834@gmail.com</p>
+                            <p className="font-bold text-sm">Hi {user?.email?.split('@')[0]} !</p>
+                            <p className="italic text-sm text-slate-700">{user?.email}</p>
                         </div>
                     </div>
                     <div

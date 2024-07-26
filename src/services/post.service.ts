@@ -4,8 +4,10 @@ import { post } from "@/context/types";
 import { addDoc, collection, doc, getDoc, getDocs, orderBy, query, where } from "firebase/firestore";
 
 // functions  :
-export const createPost = (post: post) => {
-    return addDoc(collection(database, COLLECTION_NAMES.POSTS), post);
+export const createPost = async (post: post) => {
+    // return addDoc(collection(database, COLLECTION_NAMES.POSTS), post);
+    const docRef = await addDoc(collection(database, COLLECTION_NAMES.POSTS), post);
+    console.log("Document written with ID: ", docRef.id);
 }
 
 export const getposts = () => {
