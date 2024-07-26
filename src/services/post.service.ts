@@ -15,7 +15,7 @@ export const getposts = () => {
     return getDocs(q);
 }
 
-export const getPostsById = (id: string) => {
+export const getPostsById = (id: string | undefined) => {
     const q = query(collection(database, COLLECTION_NAMES.POSTS), where("userId", "==", id));
     return getDocs(q);
 }

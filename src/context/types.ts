@@ -24,3 +24,14 @@ export interface photoMeta {
 
 }
 
+export interface responseDocument {
+    id: string;
+    caption: string;
+    photos: photoMeta[];
+    likes: number;
+    userLinks: [];
+    userId: string | null;
+    date: Date;
+
+}
+
