@@ -3,7 +3,15 @@ import { Card, CardContent, CardFooter } from './ui/card'
 import { Avatar, AvatarFallback, AvatarImage } from '@radix-ui/react-avatar'
 import { Separator } from './ui/separator'
 
-const Post = () => {
+
+
+interface postProps {
+    caption: string
+    image: string
+    author?: string
+    date?: string
+}
+const Post = ({ caption, image }: postProps) => {
     return (
         <Card className='max-w-[400px] flex flex-col gap-4 py-4 my-2 rounded-[14px] shadow-none border-none'>
             <div className='flex items-center'>
@@ -21,7 +29,7 @@ const Post = () => {
                 </button>
             </div>
             <div className='px-0'>
-                <img className='border border-slate-300 rounded-lg h-[100%]' src="https://cdn.pixabay.com/photo/2024/03/04/14/30/plant-8612513_1280.jpg" alt="" />
+                <img className='border border-slate-300 rounded-lg h-[100%]' src={image} alt="" />
             </div>
             <div className='flex justify-between items-center text-[22px] px-1'>
                 <div className='flex justify-between items-center gap-3'>
@@ -35,8 +43,10 @@ const Post = () => {
             </div>
             <div className='space-y-1'>
                 <p>671,135 likes</p>
-                <p className='font-semibold text-sm'>championsleague
-                    ✌️</p>
+                <p className='font-semibold text-sm'>
+                    {caption}
+                    ✌️
+                </p>
             </div>
             <Separator />
         </Card>

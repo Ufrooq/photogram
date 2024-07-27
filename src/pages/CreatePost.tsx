@@ -1,11 +1,8 @@
 import FileUploader from '@/components/FileUploader';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { auth } from '@/config/firebaseConfig';
-import { useGlobalContext } from '@/context/Context';
-import { FileEntry, photoMeta, post } from '@/context/types';
+import { photoMeta, post } from '@/context/types';
 import { createPost } from '@/services/post.service';
-import { Label } from '@radix-ui/react-label';
 import { OutputFileEntry } from '@uploadcare/react-uploader';
 import { useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
@@ -14,7 +11,7 @@ import { toast } from 'sonner';
 
 
 const CreatePost = () => {
-    const [user, loading] = useAuthState(auth);
+    const [user] = useAuthState(auth);
     const [fileEntry, setFileEntry] = useState<OutputFileEntry[]>([]);
     const navigate = useNavigate()
     const [post, setpost] = useState<post>({

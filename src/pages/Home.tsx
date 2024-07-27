@@ -1,10 +1,17 @@
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Post from '@/components/Post'
 import People from '@/components/People'
 import { Separator } from '@/components/ui/separator'
+import { post, responseDocument } from '@/context/types'
+import { useAuthState } from 'react-firebase-hooks/auth'
+import { auth } from '@/config/firebaseConfig'
+import { getposts } from '@/services/post.service'
 
 const Home: React.FC = () => {
+    const [user] = useAuthState(auth);
+    const [data, setdata] = useState<responseDocument[]>([])
+    const [noPostsBanner, setnoPostsBanner] = useState<boolean>(false)
 
     const storyImageLinks = [
         "https://cdn.pixabay.com/photo/2023/08/19/13/42/flowers-8200510_1280.jpg",
@@ -21,6 +28,32 @@ const Home: React.FC = () => {
         "https://cdn.pixabay.com/photo/2024/03/04/14/30/plant-8612513_1280.jpg"
 
     ]
+
+
+    const fetchAllPosts = async () => {
+        try {
+            const querySnapshot = await getposts();
+            const tempArr: responseDocument[] = [];
+            if (querySnapshot.size > 0) {
+                querySnapshot.forEach((doc) => {
+                    const data = doc.data() as post;
+                    const responseObj: responseDocument = {
+                        id: doc.id,
+                        ...data
+                    }
+                    tempArr.push(responseObj);
+                })
+                setdata(tempArr)
+            } else {
+                setnoPostsBanner(true)
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    useEffect(() => {
+        fetchAllPosts();
+    }, [])
     return (
         <div className='flex gap-12'>
             <div className='px-10 py-4'>
@@ -40,12 +73,15 @@ const Home: React.FC = () => {
                     <CarouselNext />
                 </Carousel>
                 <div className='p-2 mt-6 flex flex-col justify-center items-center'>
-                    <Post />
-                    <Post />
-                    <Post />
-                    <Post />
-                    <Post />
-                    <Post />
+                    {data &&
+                        data.map((post: post) => {
+                            return (
+                                <Post
+                                    caption={post.caption}
+                                    image={post.photos[0].cdnUrl}
+                                />
+                            )
+                        })}
                 </div>
             </div>
 
