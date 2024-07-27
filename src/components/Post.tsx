@@ -1,13 +1,16 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Card, CardContent, CardFooter } from './ui/card'
 import { Avatar, AvatarFallback, AvatarImage } from '@radix-ui/react-avatar'
 import { Separator } from './ui/separator'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { auth } from '@/config/firebaseConfig'
+import { updateLikes } from '@/services/post.service'
 
 
 
 interface postProps {
+    postId: string,
+    authorId: string,
     caption: string
     image: string
     author?: string
@@ -15,10 +18,32 @@ interface postProps {
     userLinks: string[]
 }
 
-const Post = ({ caption, image, userLinks }: postProps) => {
+const Post = ({ postId, caption, image, userLinks, authorId }: postProps) => {
 
     const [user] = useAuthState(auth);
     const userId: string | any = user?.uid
+    const [postLikes, setpostLikes] = useState<string[]>(userLinks);
+
+
+    const handleUpdateLinks = async () => {
+        try {
+            await updateLikes(postId, postLikes, postLikes.length)
+        } catch (error) {
+            console.log(error)
+        }
+
+    }
+
+    const handleAddLikes = (userId: string) => {
+        const updatedLikes = postLikes.filter((like: any) => like !== userId);
+        setpostLikes(updatedLikes);
+        handleUpdateLinks()
+    }
+
+    const handleRemoveLikes = (userId: string) => {
+        setpostLikes([...postLikes, userId]);
+        handleUpdateLinks()
+    }
 
 
     return (
@@ -42,27 +67,32 @@ const Post = ({ caption, image, userLinks }: postProps) => {
             </div>
             <div className='flex justify-between items-center text-[22px] px-1'>
                 <div className='flex justify-between items-center gap-3'>
-                    {userLinks.includes(userId) ?
-                        <button>
-                            <i className="fa-regular fa-heart text-red-600"></i>
+                    {postLikes.includes(userId) ?
+                        <button onClick={() => handleAddLikes(userId)}>
+                            <i className="fa-solid fa-heart text-red-600"></i>
                         </button>
-
                         :
-                        <button>
+                        <button onClick={() => handleRemoveLikes(userId)}>
                             <i className="fa-regular fa-heart"></i>
                         </button>
-
-
                     }
-                    <i className="fa-regular fa-comment"></i>
-                    <i className="fa-regular fa-paper-plane"></i>
+                    <button>
+                        <i className="fa-regular fa-comment"></i>
+                    </button>
+                    <button>
+                        <i className="fa-regular fa-paper-plane"></i>
+                    </button>
+
                 </div>
                 <div>
-                    <i className="fa-regular fa-bookmark"></i>
+                    <button>
+                        <i className="fa-regular fa-bookmark"></i>
+                    </button>
+
                 </div>
             </div>
             <div className='space-y-1'>
-                <p>671,135 likes</p>
+                <p>{postLikes.length} likes</p>
                 <p className='font-semibold text-sm'>
                     {caption}
                     ✌️

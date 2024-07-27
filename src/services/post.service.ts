@@ -1,7 +1,7 @@
 import { database } from "@/config/firebaseConfig";
 import { COLLECTION_NAMES } from "@/context/constants";
 import { post } from "@/context/types";
-import { addDoc, collection, doc, getDoc, getDocs, orderBy, query, where } from "firebase/firestore";
+import { addDoc, collection, doc, getDoc, getDocs, orderBy, query, where, updateDoc } from "firebase/firestore";
 
 // functions  :
 export const createPost = async (post: post) => {
@@ -28,4 +28,17 @@ export const getPostById = (id: string) => {
 
 export const deletePost = (id: string) => {
     return getDoc(doc(database, COLLECTION_NAMES.POSTS, id));
+}
+
+
+export const updateLikes = (
+    id: string,
+    userLinks: string[],
+    likes: number
+) => {
+    const docRef = doc(database, COLLECTION_NAMES.POSTS, id);
+    return updateDoc(docRef, {
+        userLinks: userLinks,
+        likes: likes
+    });
 }
