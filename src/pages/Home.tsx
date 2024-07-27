@@ -79,6 +79,7 @@ const Home: React.FC = () => {
                                 <Post
                                     caption={post.caption}
                                     image={post.photos[0].cdnUrl}
+                                    userLinks={post.userLinks}
                                 />
                             )
                         })}
