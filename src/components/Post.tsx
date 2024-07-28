@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { Card, CardContent, CardFooter } from './ui/card'
 import { Avatar, AvatarFallback, AvatarImage } from '@radix-ui/react-avatar'
 import { Separator } from './ui/separator'
@@ -25,26 +25,35 @@ const Post = ({ postId, caption, image, userLinks, authorId }: postProps) => {
     const [postLikes, setpostLikes] = useState<string[]>(userLinks);
 
 
-    const handleUpdateLinks = async () => {
+    const handleUpdateLinks = useCallback(async () => {
         try {
             await updateLikes(postId, postLikes, postLikes.length)
         } catch (error) {
             console.log(error)
         }
 
-    }
+    }, [postLikes, setpostLikes])
 
     const handleAddLikes = (userId: string) => {
         const updatedLikes = postLikes.filter((like: any) => like !== userId);
         setpostLikes(updatedLikes);
-        handleUpdateLinks()
     }
 
     const handleRemoveLikes = (userId: string) => {
         setpostLikes([...postLikes, userId]);
-        handleUpdateLinks()
     }
 
+    useEffect(() => {
+        const handleUpdateLinks = async () => {
+            try {
+                await updateLikes(postId, postLikes, postLikes.length);
+            } catch (error) {
+                console.log(error);
+            }
+        };
+
+        handleUpdateLinks();
+    }, [postLikes, postId]);
 
     return (
         <Card className='max-w-[400px] flex flex-col gap-4 py-4 my-2 rounded-[14px] shadow-none border-none'>

@@ -37,6 +37,8 @@ export const updateLikes = (
     likes: number
 ) => {
     const docRef = doc(database, COLLECTION_NAMES.POSTS, id);
+    console.log(docRef)
+    console.log(userLinks)
     return updateDoc(docRef, {
         userLinks: userLinks,
         likes: likes
