@@ -1,12 +1,27 @@
 import { Button } from "@/components/ui/button";
 import { auth } from "@/config/firebaseConfig";
+import { userCompleteInfoResponse } from "@/context/types";
+import { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useNavigate } from "react-router-dom";
 
 const ProfileInfo = () => {
 
     const [user] = useAuthState(auth);
+    const initialUserInfo: userCompleteInfoResponse = {
+        id: "",
+        userId: user?.uid,
+        displayName: user?.displayName ? user?.displayName : user?.email?.split('@')[0],
+        photoURL: user?.photoURL ? user?.photoURL : "",
+        userBio: "Please add your bio"
+    }
+    const [userInfo, setuserInfo] = useState<userCompleteInfoResponse>(initialUserInfo)
     const navigate = useNavigate()
+
+    useEffect(() => {
+
+    }, [])
+
     return (
         <div
             style={{ boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px" }}
@@ -18,7 +33,7 @@ const ProfileInfo = () => {
                 <div className="w-full space-y-4">
                     <div className="flex items-center justify-between w-[80%]">
                         <div>
-                            <h1 className="font-bold text-3xl">Hi {user?.email?.split('@')[0]} !</h1>
+                            <h1 className="font-bold text-3xl">{userInfo.displayName}</h1>
                             <p className="italic text-sm text-slate-700">{user?.email}</p>
                         </div>
                         <Button
@@ -45,7 +60,7 @@ const ProfileInfo = () => {
             <div className="space-y-2 max-w-[100%] text-center">
                 <p className="leading-6 text-md">
                     <span className="font-bold text-lg">Bio : </span>
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Autem nulla earum odit, vitae obcaecati voluptas explicabo. Id eius tempora voluptatum.
+                    {userInfo.userBio}
                 </p>
             </div>
 
