@@ -25,15 +25,6 @@ const Post = ({ postId, caption, image, userLinks, authorId }: postProps) => {
     const [postLikes, setpostLikes] = useState<string[]>(userLinks);
 
 
-    const handleUpdateLinks = useCallback(async () => {
-        try {
-            await updateLikes(postId, postLikes, postLikes.length)
-        } catch (error) {
-            console.log(error)
-        }
-
-    }, [postLikes, setpostLikes])
-
     const handleAddLikes = (userId: string) => {
         const updatedLikes = postLikes.filter((like: any) => like !== userId);
         setpostLikes(updatedLikes);

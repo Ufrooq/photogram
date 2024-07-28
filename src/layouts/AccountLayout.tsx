@@ -12,7 +12,7 @@ const AccountLayout = () => {
                     Welcome to your account details, you can edit your info here.
                 </p>
             </div>
-            <nav className='mt-8 flex gap-4 text-slate-800 font-semibold'>
+            {/* <nav className='mt-8 flex gap-4 text-slate-800 font-semibold'>
                 <NavLink
                     to="/profile"
                     className={`${location.pathname == "/profile" ? "text-black underline" : "text-gray-500"}`}
@@ -25,7 +25,7 @@ const AccountLayout = () => {
                 >
                     Update Account Info
                 </NavLink>
-            </nav>
+            </nav> */}
             <Outlet />
         </div>
     )

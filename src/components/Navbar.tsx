@@ -9,6 +9,7 @@ const Navbar = () => {
 
     const [showDialogue, setshowDialogue] = useState<boolean>(false);
     const [user] = useAuthState(auth);
+    console.log(user)
 
 
     return (

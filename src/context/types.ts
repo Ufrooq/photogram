@@ -1,4 +1,7 @@
+import { auth } from "@/config/firebaseConfig";
 import { OutputFileEntry } from "@uploadcare/react-uploader";
+import { useAuthState } from "react-firebase-hooks/auth";
+const [user] = useAuthState(auth);
 
 export type UserInfo = {
     email: string,
@@ -33,5 +36,26 @@ export interface responseDocument {
     userId: string | null;
     date: Date;
 
+}
+
+export interface userDefaultInfo {
+    user?: typeof user;
+    displayName?: string,
+    photoURL?: string
+}
+
+export interface userCompleteInfo {
+    userId?: string;
+    displayName?: string;
+    photoURL?: string;
+    userBio?: string;
+}
+
+export interface userCompleteInfoResponse {
+    id?: string,
+    userId?: string;
+    displayName?: string;
+    photoURL?: string;
+    userBio?: string;
 }
 
