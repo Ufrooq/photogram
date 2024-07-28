@@ -49,6 +49,9 @@ export interface userCompleteInfo {
     displayName?: string;
     photoURL?: string;
     userBio?: string;
+    faceBookLink?: string;
+    twitterLink?: string;
+    linkedInLink?: string;
 }
 
 export interface userCompleteInfoResponse {
@@ -57,5 +60,8 @@ export interface userCompleteInfoResponse {
     displayName?: string;
     photoURL?: string;
     userBio?: string;
+    faceBookLink?: string;
+    twitterLink?: string;
+    linkedInLink?: string;
 }
 
