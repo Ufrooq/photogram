@@ -18,8 +18,9 @@ const ContextProvider = ({ children }: { children: ReactNode }) => {
 
     const continueWithGoogle = async () => {
         try {
-            await signInWithPopup(auth, googleProvider);
-            setisLoggedIn(true)
+            const response = await signInWithPopup(auth, googleProvider);
+            return response;
+            // setisLoggedIn(true)
         } catch (error) {
             console.log(error)
         }
@@ -34,7 +35,6 @@ const ContextProvider = ({ children }: { children: ReactNode }) => {
     }
     const loginUser = async (data: UserInfo) => {
         try {
-
             const response = await signInWithEmailAndPassword(auth, data.email, data.password)
             return response;
 

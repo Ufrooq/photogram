@@ -3,6 +3,7 @@ import { Button } from "./ui/button";
 import { useNavigate } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "@/config/firebaseConfig";
+import { toast } from "sonner";
 
 const Navbar = () => {
     const navigate = useNavigate()
@@ -10,8 +11,14 @@ const Navbar = () => {
     const [showDialogue, setshowDialogue] = useState<boolean>(false);
     const [user] = useAuthState(auth);
     console.log(user)
-
-
+    const handleSignOut = async () => {
+        try {
+            toast.success("Signed out successfully !")
+            await auth.signOut()
+        } catch (error) {
+            console.log(error)
+        }
+    }
     return (
         <nav className="w-full h-[80px] px-6 flex items-center relative shadow-sm">
             <button
@@ -39,7 +46,7 @@ const Navbar = () => {
                         <i className="fa-regular fa-user text-2xl"></i>
                         <span className="text-xl">My Account</span>
                     </div>
-                    <Button className="w-full text-md flex items-center gap-2">
+                    <Button onClick={handleSignOut} className="w-full text-md flex items-center gap-2">
                         <i className="fa-solid fa-arrow-right-from-bracket"></i>
                         Logout
                     </Button>

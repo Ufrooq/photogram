@@ -30,6 +30,20 @@ const Login = () => {
         setuserInfo({ ...userInfo, [e.target.id]: e.target.value })
     }
 
+    async function signinWithGoogle() {
+        try {
+            const response = await continueWithGoogle();
+            if (response) {
+                setisLoggedIn(true)
+                toast.success("Signed in successfully !")
+                navigate("/home")
+            }
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     const handleSubmit = async (e: any) => {
         e.preventDefault();
         try {
@@ -60,7 +74,7 @@ const Login = () => {
             </CardHeader>
             <CardContent className="grid gap-4">
                 <div className="grid gap-6">
-                    <Button onClick={continueWithGoogle} variant="custom">
+                    <Button onClick={signinWithGoogle} variant="custom">
                         <Icons.google className="mr-2 h-4 w-4" />
                         Google
                     </Button>

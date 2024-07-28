@@ -30,6 +30,20 @@ const Signup: React.FC = () => {
     }
 
 
+    async function signupWithGoogle() {
+        try {
+            const response = await continueWithGoogle();
+            if (response) {
+                setisLoggedIn(true)
+                toast.success("Signed up successfully !")
+                navigate("/home")
+            }
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     const handleSubmit = async (e: any) => {
         e.preventDefault();
         try {
@@ -66,7 +80,7 @@ const Signup: React.FC = () => {
             </CardHeader>
             <CardContent className="grid gap-4">
                 <div className="grid gap-6">
-                    <Button onClick={continueWithGoogle} variant="custom">
+                    <Button onClick={signupWithGoogle} variant="custom">
                         <Icons.google className="mr-2 h-4 w-4" />
                         Google
                     </Button>
