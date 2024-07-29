@@ -4,12 +4,15 @@ import { Input } from '@/components/ui/input'
 import { auth } from '@/config/firebaseConfig'
 import { Label } from '@radix-ui/react-label'
 import { useAuthState } from 'react-firebase-hooks/auth'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
 
 const UpdateProfile = () => {
     const [user] = useAuthState(auth);
     const navigate = useNavigate();
+    const location = useLocation();
+
+    const { id, userId, displayName, photoURL, userBio, faceBookLink, twitterLink, linkedInLink } = location.state
 
 
     const handleSubmit = async (e: any) => {

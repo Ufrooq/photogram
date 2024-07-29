@@ -44,9 +44,9 @@ const MyPosts = () => {
             </div>
             <div
                 style={{ boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px" }}
-                className='page_content_container'
+                className='page_content_container h-[70vh]'
             >
-                <div className="parent h-[70vh]">
+                {data.length > 0 && <div className="parent h-[70vh]">
                     {data.map((post, key) => (
                         <div className={`div${key + 1} post`}>
                             <img
@@ -54,7 +54,7 @@ const MyPosts = () => {
                                 src={post.photos[0].cdnUrl} alt="" />
                         </div>
                     ))}
-                </div>
+                </div>}
                 {noPostsBanner &&
                     <h1 className='font-2xl text-center font-semibold'>No posts created yet !!</h1>
                 }

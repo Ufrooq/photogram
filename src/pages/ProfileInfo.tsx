@@ -42,7 +42,7 @@ const ProfileInfo = () => {
                         <Button
                             variant={"custom"}
                             className="text-md"
-                            onClick={() => navigate("/profile/update-profile")}
+                            onClick={() => navigate("/profile/update-profile", { state: userInfo })}
                         >
                             Edit Profile
                         </Button>
