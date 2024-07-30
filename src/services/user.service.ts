@@ -22,6 +22,7 @@ export const getUserProfile = async (userId: string) => {
                     ...data
                 }
             })
+            return tempData;
         }
         else {
             return tempData;

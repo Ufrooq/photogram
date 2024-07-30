@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { auth } from "@/config/firebaseConfig";
 import { userCompleteInfoResponse } from "@/context/types";
+import { getUserProfile } from "@/services/user.service";
 import { Label } from "@radix-ui/react-label";
 import { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -16,13 +17,34 @@ const ProfileInfo = () => {
         userId: user?.uid,
         displayName: user?.displayName ? user?.displayName : user?.email?.split('@')[0],
         photoURL: user?.photoURL ? user?.photoURL : "",
-        userBio: "Please add your bio"
+        userBio: "Please add your bio",
+        faceBookLink: "http://facebook.com/sdasjdn",
+        twitterLink: "http://LinkedIn.com/392e83m2e8",
+        linkedInLink: "http://LinkedIn.com/xm392xe93m"
     }
     const [userInfo, setuserInfo] = useState<userCompleteInfoResponse>(initialUserInfo)
     const navigate = useNavigate()
 
-    useEffect(() => {
+    const fetchUser = async (userId: string) => {
+        try {
+            const data: userCompleteInfoResponse = await getUserProfile(userId);
+            if (data) {
+                setuserInfo(data)
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
+    const handleCopyUrl = async (url: string) => {
+        navigator.clipboard.writeText(url)
+        toast.info("Link copied !")
+    }
+
+    useEffect(() => {
+        if (user) {
+            fetchUser(userInfo.userId || "")
+        }
     }, [])
 
     return (
@@ -32,7 +54,14 @@ const ProfileInfo = () => {
         >
 
             <div className="flex gap-10 items-center">
-                <i className="fa-solid fa-circle-user text-[140px] text-purple-700"></i>
+                {userInfo && userInfo.photoURL ?
+                    <div className="min-w-[140px] max-w-[140px] h-[140px] rounded-full overflow-hidden shadow-xl">
+                        <img src={userInfo.photoURL} alt="profile" className='w-[100%] h-[100%] object-fill' />
+                    </div>
+                    :
+                    <i className="fa-solid fa-circle-user text-[140px] text-purple-700"></i>
+
+                }
                 <div className="w-full space-y-4">
                     <div className="flex items-center justify-between w-[100%]">
                         <div>
@@ -78,20 +107,20 @@ const ProfileInfo = () => {
             </div>
             <div className="space-y-6">
                 <div className="flex space-x-2">
-                    <Input value="http://facebook.com/link/to/document" readOnly />
-                    <Button onClick={() => toast.success("Link Coped !")} variant="secondary" className="shrink-0 text-blue-500">
+                    <Input value={userInfo.faceBookLink} readOnly />
+                    <Button onClick={() => handleCopyUrl(userInfo.faceBookLink)} variant="secondary" className="shrink-0 text-blue-500">
                         Copy <i className="fa-brands fa-facebook mx-2"></i> Link
                     </Button>
                 </div>
                 <div className="flex space-x-2">
-                    <Input value="http://LinkedIn.com/link/to/document" readOnly />
-                    <Button onClick={() => toast.success("Link Coped !")} variant="secondary" className="shrink-0 text-blue-700">
+                    <Input value={userInfo.linkedInLink} readOnly />
+                    <Button onClick={() => handleCopyUrl(userInfo.linkedInLink)} variant="secondary" className="shrink-0 text-blue-700">
                         Copy <i className="fa-brands fa-linkedin mx-2"></i> Link
                     </Button>
                 </div>
                 <div className="flex space-x-2">
-                    <Input value="http://LinkedIn.com/link/to/document" readOnly />
-                    <Button onClick={() => toast.success("Link Coped !")} variant="secondary" className="shrink-0 text-blue-900">
+                    <Input value={userInfo.twitterLink} readOnly />
+                    <Button onClick={() => handleCopyUrl(userInfo.twitterLink)} variant="secondary" className="shrink-0 text-blue-900">
                         Copy <i className="fa-brands fa-twitter mx-2 "></i> Link
                     </Button>
                 </div>
