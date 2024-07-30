@@ -48,9 +48,18 @@ const UpdateProfile = () => {
                 navigate("/profile")
             }
         } catch (error) {
-            toast.error("Error occured while updating !")
+            toast.error("Error occured while updating Profile !")
         }
     }
+    // console.log(fileEntry)
+
+    useEffect(() => {
+        if (fileEntry.length > 0) {
+            setdata({ ...data, photoURL: fileEntry[0].cdnUrl || "" })
+        }
+
+    }, [fileEntry])
+
 
     useEffect(() => {
         if (fileEntry.length > 0) {
@@ -103,7 +112,7 @@ const UpdateProfile = () => {
                                     />
                                 </div>
                                 <div className="grid gap-2">
-                                    <Label htmlFor="password">Bio</Label>
+                                    <Label htmlFor="userBio">Bio</Label>
                                     <textarea
                                         id="userBio"
                                         className='border border-slate-400 px-4 py-3 rounded-lg h-[80px]'
