@@ -64,11 +64,11 @@
     @apply text-3xl font-extrabold;
   }
   .page_sub_heading {
-    @apply text-lg mt-1 text-slate-700;
+    @apply mt-1 text-lg text-slate-700;
   }
 
   .page_content_container {
-    @apply w-full rounded-2xl px-8 py-6 mt-6 relative z-10;
+    @apply relative z-10 mt-6 w-full rounded-2xl px-8 py-6;
   }
 }
 
