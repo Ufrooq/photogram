@@ -1,8 +1,13 @@
+import FileUploader from '@/components/FileUploader'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { auth } from '@/config/firebaseConfig'
+import { userCompleteInfo } from '@/context/types'
+import { createUserProfile, updateUserProfile } from '@/services/user.service'
 import { Label } from '@radix-ui/react-label'
+import { OutputFileEntry } from '@uploadcare/react-uploader'
+import { useEffect, useState } from 'react'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
@@ -14,16 +19,45 @@ const UpdateProfile = () => {
 
     const { id, userId, displayName, photoURL, userBio, faceBookLink, twitterLink, linkedInLink } = location.state
 
+    const initialUserInfo: userCompleteInfo = {
+        userId,
+        displayName,
+        photoURL,
+        userBio,
+        faceBookLink,
+        twitterLink,
+        linkedInLink,
+    };
+    const [data, setdata] = useState<userCompleteInfo>(initialUserInfo);
+    const [fileEntry, setFileEntry] = useState<OutputFileEntry[]>([]);
 
+    const handleOnChange = (e: any) => {
+        setdata({ ...data, [e.target.id]: e.target.value })
+    }
     const handleSubmit = async (e: any) => {
         e.preventDefault();
         try {
-
+            // await updateUserProfile(id, data);
+            if (id) {
+                const response: any = await updateUserProfile(id, data);
+                toast.success("Profile Updated successfully !")
+                navigate("/profile")
+            } else {
+                const response: any = await createUserProfile(data);
+                toast.success("Profile Updated s successfully !")
+                navigate("/profile")
+            }
         } catch (error) {
             toast.error("Error occured while updating !")
         }
     }
 
+    useEffect(() => {
+        if (fileEntry.length > 0) {
+            setdata({ ...data, photoURL: fileEntry[0].cdnUrl || "" })
+        }
+
+    }, [fileEntry])
     return (
         <div
             style={{ boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px" }}
@@ -43,21 +77,40 @@ const UpdateProfile = () => {
                             </div>
                         </div>
                         <div className='w-full flex justify-between items-end gap-6'>
-                            <div className='rounded-xl bg-black flex items-center justify-center w-[180px] h-[200px]'>
-                                <i className="fa-regular fa-user text-white text-[120px]"></i>
+                            <div className='flex flex-col gap-4 items-center'>
+
+                                {photoURL && fileEntry.length < 1 ?
+                                    <img src={photoURL} alt="profile" className='rounded-[10px] w-[120px]' />
+                                    :
+                                    fileEntry.length > 0 ?
+                                        <img src={fileEntry[0].cdnUrl || ""} alt="profile" className='rounded-[10px] w-[120px]' />
+                                        :
+                                        <div className='rounded-xl bg-black flex items-center justify-center w-[180px] h-[170px]'>
+                                            <i className="fa-regular fa-user text-white text-[120px]"></i>
+                                        </div>
+                                }
+
                             </div>
                             <div className='flex-1 flex flex-col gap-4'>
                                 <div className="grid gap-2 w-[40%]">
                                     <Label htmlFor="name">Name : </Label>
-                                    <Input id="name" type="text" placeholder="Enter your name here" />
+                                    <Input
+                                        id="displayName"
+                                        type="text"
+                                        placeholder="Enter your name here"
+                                        onChange={handleOnChange}
+                                        value={data.displayName}
+                                    />
                                 </div>
                                 <div className="grid gap-2">
                                     <Label htmlFor="password">Bio</Label>
                                     <textarea
-                                        id="password"
+                                        id="userBio"
                                         className='border border-slate-400 px-4 py-3 rounded-lg h-[80px]'
                                         rows={4}
                                         placeholder="Enter a biography for your profofile"
+                                        onChange={handleOnChange}
+                                        value={data.userBio}
                                     />
                                 </div>
                             </div>
@@ -73,16 +126,34 @@ const UpdateProfile = () => {
                             </div>
                         </div>
                         <div className="grid gap-2">
-                            <Label htmlFor="Instagram">Instagram Link</Label>
-                            <Input id="Instagram" type="text" placeholder="instagram.com/umar_cpp" />
+                            <Label htmlFor="faceBookLink">Instagram Link</Label>
+                            <Input
+                                id="faceBookLink"
+                                type="text"
+                                placeholder="facebook.com/umar_cpp"
+                                onChange={handleOnChange}
+                                value={data.faceBookLink}
+                            />
                         </div>
                         <div className="grid gap-2">
-                            <Label htmlFor="Facebook">Facebook Link</Label>
-                            <Input id="Facebook" type="text" placeholder="facebook.com/umar" />
+                            <Label htmlFor="linkedInLink">Facebook Link</Label>
+                            <Input
+                                id="linkedInLink"
+                                type="text"
+                                placeholder="linkedIn.com/umar"
+                                onChange={handleOnChange}
+                                value={data.linkedInLink}
+                            />
                         </div>
                         <div className="grid gap-2">
-                            <Label htmlFor="Twitter">Twitter Link</Label>
-                            <Input id="Twitter" type="text" placeholder="twitter.com/umar" />
+                            <Label htmlFor="twitterLink">Twitter Link</Label>
+                            <Input
+                                id="twitterLink"
+                                type="text"
+                                placeholder="twitter.com/umar"
+                                onChange={handleOnChange}
+                                value={data.twitterLink}
+                            />
                         </div>
                         <div className='flex gap-4 mt-10'>
                             <Button
@@ -101,10 +172,10 @@ const UpdateProfile = () => {
                                 Update Profile
                             </Button>
                         </div>
-                    </form>
-                </CardContent>
-            </Card>
-        </div>
+                    </form >
+                </CardContent >
+            </Card >
+        </div >
     )
 }
 
