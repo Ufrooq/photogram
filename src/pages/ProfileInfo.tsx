@@ -55,8 +55,8 @@ const ProfileInfo = () => {
 
             <div className="flex gap-10 items-center">
                 {userInfo && userInfo.photoURL ?
-                    <div className="min-w-[140px] max-w-[140px] h-[140px] rounded-full overflow-hidden shadow-xl">
-                        <img src={userInfo.photoURL} alt="profile" className='w-[100%] h-[100%] object-fill' />
+                    <div className="max-w-[140px] h-[140px] rounded-full overflow-hidden shadow-xl">
+                        <img src={userInfo.photoURL} alt="profile" className='w-[100%] h-[100%]' />
                     </div>
                     :
                     <i className="fa-solid fa-circle-user text-[140px] text-purple-700"></i>

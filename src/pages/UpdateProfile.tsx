@@ -98,6 +98,9 @@ const UpdateProfile = () => {
                                             <i className="fa-regular fa-user text-white text-[120px]"></i>
                                         </div>
                                 }
+                                <div>
+                                    <FileUploader previewUploadedImages={false} files={fileEntry} onChange={setFileEntry} />
+                                </div>
 
                             </div>
                             <div className='flex-1 flex flex-col gap-4'>

@@ -80,7 +80,7 @@ const CreatePost = () => {
                             ></textarea>
                         </div>
                         <div className="w-full">
-                            <FileUploader files={fileEntry} onChange={setFileEntry} />
+                            <FileUploader previewUploadedImages={false} files={fileEntry} onChange={setFileEntry} />
                         </div>
                         <div className='w-full p-4 flex justify-end text-xl'>
                             <Button type='submit' variant={"custom"} className='px-6 py-2 gap-3 text-lg'>
