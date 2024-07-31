@@ -1,6 +1,6 @@
 import { database } from "@/config/firebaseConfig";
 import { COLLECTION_NAMES } from "@/context/constants";
-import { post } from "@/context/types";
+import { post, userDefaultInfo } from "@/context/types";
 import { addDoc, collection, doc, getDoc, getDocs, orderBy, query, where, updateDoc } from "firebase/firestore";
 
 // functions  :
@@ -43,4 +43,23 @@ export const updateLikes = (
         userLinks: userLinks,
         likes: likes
     });
+}
+export const updateUserInfoONPost = async (profileInfo: userDefaultInfo) => {
+    try {
+        const q = query(collection(database, COLLECTION_NAMES.POSTS), where("userId", "==", profileInfo.user?.uid))
+        const querySnapshot = await getDocs(q)
+        if (querySnapshot.size > 0) {
+            querySnapshot.forEach((post) => {
+                const docRef = doc(database, COLLECTION_NAMES.POSTS, post.id);
+                updateDoc(docRef, {
+                    username: profileInfo.displayName,
+                    photoURL: profileInfo.photoURL
+                })
+
+
+            })
+        }
+    } catch (error) {
+        console.log(error)
+    }
 }

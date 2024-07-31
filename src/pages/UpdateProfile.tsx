@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input'
 import { auth } from '@/config/firebaseConfig'
 import { useGlobalContext } from '@/context/Context'
 import { userCompleteInfo, userDefaultInfo } from '@/context/types'
+import { updateUserInfoONPost } from '@/services/post.service'
 import { createUserProfile, updateUserProfile } from '@/services/user.service'
 import { Label } from '@radix-ui/react-label'
 import { OutputFileEntry } from '@uploadcare/react-uploader'
@@ -57,6 +58,7 @@ const UpdateProfile = () => {
 
             }
             updateProfile(profileInfo_for_firebaseUser);
+            updateUserInfoONPost(profileInfo_for_firebaseUser)
         } catch (error) {
             toast.error("Error occured while updating Profile !")
         }
