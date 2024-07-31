@@ -74,12 +74,14 @@ const Home: React.FC = () => {
                 </Carousel>
                 <div className='p-2 mt-6 flex flex-col justify-center items-center'>
                     {data &&
-                        data.map((post: any) => {
+                        data.map((post: responseDocument) => {
                             return (
                                 <Post
                                     key={post.id}
+                                    username={post.username}
+                                    userPhotoUrl={post.photoURL}
                                     postId={post.id}
-                                    authorId={post.userId}
+                                    authorId={post.userId!}
                                     caption={post.caption}
                                     image={post.photos[0].cdnUrl}
                                     userLinks={post.userLinks}

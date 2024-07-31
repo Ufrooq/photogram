@@ -16,9 +16,11 @@ interface postProps {
     author?: string
     date?: string
     userLinks: string[]
+    username?: string;
+    userPhotoUrl?: string;
 }
 
-const Post = ({ postId, caption, image, userLinks, authorId }: postProps) => {
+const Post = ({ username, userPhotoUrl, postId, caption, image, userLinks, authorId }: postProps) => {
 
     const [user] = useAuthState(auth);
     const userId: string | any = user?.uid
@@ -51,11 +53,11 @@ const Post = ({ postId, caption, image, userLinks, authorId }: postProps) => {
             <div className='flex items-center'>
                 <div className="flex items-center space-x-4">
                     <Avatar className='bg-black rounded-full w-10 h-10 overflow-hidden'>
-                        <AvatarImage className='h-full' src="https://cdn.pixabay.com/photo/2023/03/08/15/23/lake-7838004_960_720.jpg" />
+                        <AvatarImage className='h-full' src={username} />
                     </Avatar>
                     <div>
-                        <p className="text-sm font-medium leading-none">Sofia Davi</p>
-                        <p className="text-sm text-muted-foreground">m@example.com</p>
+                        <p className="text-sm font-medium leading-none">{username}</p>
+                        <p className="text-sm text-muted-foreground">{user?.email}</p>
                     </div>
                 </div>
                 <button className='ms-auto'>

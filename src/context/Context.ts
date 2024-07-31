@@ -1,5 +1,5 @@
 import { createContext, useContext } from "react"
-import { photoMeta, UserInfo } from "./types";
+import { photoMeta, userDefaultInfo, UserInfo } from "./types";
 import { OutputFileEntry } from "@uploadcare/react-uploader";
 
 
@@ -14,6 +14,7 @@ export interface AuthContext_type {
     currentUser: any;
     files: OutputFileEntry[] | undefined;
     setFiles: React.Dispatch<React.SetStateAction<OutputFileEntry[] | undefined>>;
+    updateProfile: (info: userDefaultInfo) => Promise<any> | undefined;
     // setcurrentUser: React.Dispatch<any>;
 }
 

@@ -3,7 +3,8 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { auth } from '@/config/firebaseConfig'
-import { userCompleteInfo } from '@/context/types'
+import { useGlobalContext } from '@/context/Context'
+import { userCompleteInfo, userDefaultInfo } from '@/context/types'
 import { createUserProfile, updateUserProfile } from '@/services/user.service'
 import { Label } from '@radix-ui/react-label'
 import { OutputFileEntry } from '@uploadcare/react-uploader'
@@ -16,6 +17,7 @@ const UpdateProfile = () => {
     const [user] = useAuthState(auth);
     const navigate = useNavigate();
     const location = useLocation();
+    const { updateProfile } = useGlobalContext()
 
     const { id, userId, displayName, photoURL, userBio, faceBookLink, twitterLink, linkedInLink } = location.state
 
@@ -39,14 +41,22 @@ const UpdateProfile = () => {
         try {
             // await updateUserProfile(id, data);
             if (id) {
-                const response: any = await updateUserProfile(id, data);
+                await updateUserProfile(id, data);
                 toast.success("Profile Updated successfully !")
                 navigate("/profile")
             } else {
-                const response: any = await createUserProfile(data);
+                await createUserProfile(data);
                 toast.success("Profile Updated s successfully !")
                 navigate("/profile")
             }
+
+            const profileInfo_for_firebaseUser: userDefaultInfo = {
+                user: user!,
+                displayName: data.displayName,
+                photoURL: data.photoURL,
+
+            }
+            updateProfile(profileInfo_for_firebaseUser);
         } catch (error) {
             toast.error("Error occured while updating Profile !")
         }

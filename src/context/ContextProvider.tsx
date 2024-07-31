@@ -1,8 +1,14 @@
 import { ReactNode, useState } from 'react'
 import { AuthContext_type, Globalcontext } from './Context';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, onAuthStateChanged } from 'firebase/auth';
+import {
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+    signInWithPopup,
+    onAuthStateChanged,
+    updateProfile as firebaseUpdateProfile
+} from 'firebase/auth';
 import { auth, githubProvider, googleProvider } from '@/config/firebaseConfig';
-import { photoMeta, UserInfo } from './types';
+import { photoMeta, userDefaultInfo, UserInfo } from './types';
 import { OutputFileEntry } from '@uploadcare/react-uploader';
 
 
@@ -59,6 +65,19 @@ const ContextProvider = ({ children }: { children: ReactNode }) => {
             console.log("user not found !")
         }
     })
+
+    const updateProfile = (info: userDefaultInfo) => {
+        try {
+            return firebaseUpdateProfile(info.user!, {
+                displayName: info.displayName,
+                photoURL: info.photoURL
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+
     const contextValues: AuthContext_type = {
         // states ------->
         isLoggedIn,
@@ -71,8 +90,11 @@ const ContextProvider = ({ children }: { children: ReactNode }) => {
         registerUser,
         loginUser,
         continueWithGithub,
-        continueWithGoogle
+        continueWithGoogle,
+        updateProfile
     }
+
+
     return (
         <Globalcontext.Provider value={contextValues}>
             {children}
