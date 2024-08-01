@@ -34,6 +34,29 @@ export const getUserProfile = async (userId: string) => {
     }
 }
 
+export const getAllUsers = async () => {
+
+    try {
+        const q = query(collection(database, COLLECTION_NAMES.USERS))
+        const querySnapshot = await getDocs(q)
+        const tempData: userCompleteInfoResponse[] = []
+        if (querySnapshot.size > 0) {
+            querySnapshot.forEach((doc) => {
+                const data = doc.data() as userCompleteInfoResponse;
+                tempData.push(data)
+            })
+            return tempData;
+        }
+        else {
+            return tempData;
+        }
+    }
+
+    catch (error) {
+        console.log(error)
+    }
+}
+
 export const updateUserProfile = (
     id: string,
     userInfo: userCompleteInfo

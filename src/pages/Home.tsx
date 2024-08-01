@@ -3,14 +3,16 @@ import React, { useEffect, useState } from 'react'
 import Post from '@/components/Post'
 import People from '@/components/People'
 import { Separator } from '@/components/ui/separator'
-import { post, responseDocument } from '@/context/types'
+import { post, responseDocument, userCompleteInfoResponse } from '@/context/types'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { auth } from '@/config/firebaseConfig'
 import { getposts } from '@/services/post.service'
+import { getAllUsers } from '@/services/user.service'
 
 const Home: React.FC = () => {
     const [user] = useAuthState(auth);
     const [data, setdata] = useState<responseDocument[]>([])
+    const [suggestedFriends, setsuggestedFriends] = useState<userCompleteInfoResponse[]>([])
     const [noPostsBanner, setnoPostsBanner] = useState<boolean>(false)
 
     const storyImageLinks = [
@@ -32,28 +34,38 @@ const Home: React.FC = () => {
 
     const fetchAllPosts = async () => {
         try {
-            const querySnapshot = await getposts();
-            const tempArr: responseDocument[] = [];
-            if (querySnapshot.size > 0) {
-                querySnapshot.forEach((doc) => {
-                    const data = doc.data() as post;
-                    const responseObj: responseDocument = {
-                        id: doc.id,
-                        ...data
-                    }
-                    tempArr.push(responseObj);
-                })
-                setdata(tempArr)
-            } else {
+            const response = await getposts() as responseDocument[];
+            if (response.length > 0) {
+                setdata(response)
+            }
+            else {
                 setnoPostsBanner(true)
             }
         } catch (error) {
             console.log(error)
         }
     }
+    const fetchAllSuggestedUsers = async () => {
+        try {
+            const response = await getAllUsers() as userCompleteInfoResponse[];
+            if (response.length > 0) {
+                setsuggestedFriends(response)
+                console.log(response)
+            }
+            else {
+                // setnoPostsBanner(true)
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+
     useEffect(() => {
         fetchAllPosts();
+        fetchAllSuggestedUsers();
     }, [])
+
     return (
         <div className='flex gap-12'>
             <div className='px-10 py-4'>
@@ -95,7 +107,10 @@ const Home: React.FC = () => {
                 style={{ boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px" }}
                 className='rounded-xl h-[600px]'
             >
-                <People />
+                {suggestedFriends.length > 0
+                    &&
+                    <People suggestedFriends={suggestedFriends} />
+                }
             </div>
         </div>
     )

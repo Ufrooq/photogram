@@ -73,12 +73,6 @@ const UpdateProfile = () => {
     }, [fileEntry])
 
 
-    useEffect(() => {
-        if (fileEntry.length > 0) {
-            setdata({ ...data, photoURL: fileEntry[0].cdnUrl || "" })
-        }
-
-    }, [fileEntry])
     return (
         <div
             style={{ boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px" }}

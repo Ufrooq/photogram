@@ -53,7 +53,7 @@ const Post = ({ username, userPhotoUrl, postId, caption, image, userLinks, autho
             <div className='flex items-center'>
                 <div className="flex items-center space-x-4">
                     <Avatar className='bg-black rounded-full w-10 h-10 overflow-hidden'>
-                        <AvatarImage className='h-full' src={username} />
+                        <AvatarImage className='h-full' src={userPhotoUrl} />
                     </Avatar>
                     <div>
                         <p className="text-sm font-medium leading-none">{username}</p>

@@ -1,6 +1,6 @@
 import { database } from "@/config/firebaseConfig";
 import { COLLECTION_NAMES } from "@/context/constants";
-import { post, userDefaultInfo } from "@/context/types";
+import { post, responseDocument, userDefaultInfo } from "@/context/types";
 import { addDoc, collection, doc, getDoc, getDocs, orderBy, query, where, updateDoc } from "firebase/firestore";
 
 // functions  :
@@ -10,9 +10,27 @@ export const createPost = async (post: post) => {
     console.log("Document written with ID: ", docRef.id);
 }
 
-export const getposts = () => {
+export const getposts = async () => {
     const q = query(collection(database, COLLECTION_NAMES.POSTS), orderBy("date", "desc"));
-    return getDocs(q);
+    try {
+        const querySnapshot = await getDocs(q);
+        const tempArr: responseDocument[] = [];
+        if (querySnapshot.size > 0) {
+            querySnapshot.forEach((doc) => {
+                const data = doc.data() as post;
+                const responseObj: responseDocument = {
+                    id: doc.id,
+                    ...data
+                }
+                tempArr.push(responseObj);
+            })
+            return tempArr
+        } else {
+            return tempArr
+        }
+    } catch (error) {
+        console.log(error)
+    }
 }
 
 export const getPostsById = (id: string | undefined) => {
@@ -37,8 +55,6 @@ export const updateLikes = (
     likes: number
 ) => {
     const docRef = doc(database, COLLECTION_NAMES.POSTS, id);
-    console.log(docRef)
-    console.log(userLinks)
     return updateDoc(docRef, {
         userLinks: userLinks,
         likes: likes
