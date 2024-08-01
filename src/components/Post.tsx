@@ -1,10 +1,11 @@
-import React, { useCallback, useEffect, useState } from 'react'
-import { Card, CardContent, CardFooter } from './ui/card'
-import { Avatar, AvatarFallback, AvatarImage } from '@radix-ui/react-avatar'
+import { useEffect, useState } from 'react'
+import { Card } from './ui/card'
+import { Avatar, AvatarImage } from '@radix-ui/react-avatar'
 import { Separator } from './ui/separator'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { auth } from '@/config/firebaseConfig'
 import { updateLikes } from '@/services/post.service'
+import CommentDialogue from './CommentDialogue'
 
 
 
@@ -20,7 +21,7 @@ interface postProps {
     userPhotoUrl?: string;
 }
 
-const Post = ({ username, userPhotoUrl, postId, caption, image, userLinks, authorId }: postProps) => {
+const Post = ({ username, userPhotoUrl, postId, caption, image, userLinks }: postProps) => {
 
     const [user] = useAuthState(auth);
     const userId: string | any = user?.uid
@@ -57,7 +58,7 @@ const Post = ({ username, userPhotoUrl, postId, caption, image, userLinks, autho
                     </Avatar>
                     <div>
                         <p className="text-sm font-medium leading-none">{username}</p>
-                        <p className="text-sm text-muted-foreground">{user?.email}</p>
+                        {/* <p className="text-sm text-muted-foreground">{user?.email}</p> */}
                     </div>
                 </div>
                 <button className='ms-auto'>
@@ -78,9 +79,9 @@ const Post = ({ username, userPhotoUrl, postId, caption, image, userLinks, autho
                             <i className="fa-regular fa-heart"></i>
                         </button>
                     }
-                    <button>
-                        <i className="fa-regular fa-comment"></i>
-                    </button>
+                    {/* <button> */}
+                    <CommentDialogue />
+                    {/* </button> */}
                     <button>
                         <i className="fa-regular fa-paper-plane"></i>
                     </button>

@@ -2,18 +2,15 @@ import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
 import React, { useEffect, useState } from 'react'
 import Post from '@/components/Post'
 import People from '@/components/People'
-import { Separator } from '@/components/ui/separator'
-import { post, responseDocument, userCompleteInfoResponse } from '@/context/types'
-import { useAuthState } from 'react-firebase-hooks/auth'
-import { auth } from '@/config/firebaseConfig'
+import { responseDocument, userCompleteInfoResponse } from '@/context/types'
 import { getposts } from '@/services/post.service'
 import { getAllUsers } from '@/services/user.service'
 
 const Home: React.FC = () => {
-    const [user] = useAuthState(auth);
+    // const [user] = useAuthState(auth);
     const [data, setdata] = useState<responseDocument[]>([])
     const [suggestedFriends, setsuggestedFriends] = useState<userCompleteInfoResponse[]>([])
-    const [noPostsBanner, setnoPostsBanner] = useState<boolean>(false)
+    // const [noPostsBanner, setnoPostsBanner] = useState<boolean>(false)
 
     const storyImageLinks = [
         "https://cdn.pixabay.com/photo/2023/08/19/13/42/flowers-8200510_1280.jpg",
@@ -39,7 +36,7 @@ const Home: React.FC = () => {
                 setdata(response)
             }
             else {
-                setnoPostsBanner(true)
+                // setnoPostsBanner(true)
             }
         } catch (error) {
             console.log(error)

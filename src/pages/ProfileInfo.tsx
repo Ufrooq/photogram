@@ -3,7 +3,6 @@ import { Input } from "@/components/ui/input";
 import { auth } from "@/config/firebaseConfig";
 import { userCompleteInfoResponse } from "@/context/types";
 import { getUserProfile } from "@/services/user.service";
-import { Label } from "@radix-ui/react-label";
 import { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useNavigate } from "react-router-dom";
@@ -28,7 +27,7 @@ const ProfileInfo = () => {
 
     const fetchUser = async (userId: string) => {
         try {
-            const data: userCompleteInfoResponse = await getUserProfile(userId);
+            const data: userCompleteInfoResponse | any = await getUserProfile(userId);
             if (data) {
                 setuserInfo(data)
             }
@@ -108,19 +107,19 @@ const ProfileInfo = () => {
             <div className="space-y-6">
                 <div className="flex space-x-2">
                     <Input value={userInfo.faceBookLink} readOnly />
-                    <Button onClick={() => handleCopyUrl(userInfo.faceBookLink)} variant="secondary" className="shrink-0 text-blue-500">
+                    <Button onClick={() => handleCopyUrl(userInfo.faceBookLink!)} variant="secondary" className="shrink-0 text-blue-500">
                         Copy <i className="fa-brands fa-facebook mx-2"></i> Link
                     </Button>
                 </div>
                 <div className="flex space-x-2">
                     <Input value={userInfo.linkedInLink} readOnly />
-                    <Button onClick={() => handleCopyUrl(userInfo.linkedInLink)} variant="secondary" className="shrink-0 text-blue-700">
+                    <Button onClick={() => handleCopyUrl(userInfo.linkedInLink!)} variant="secondary" className="shrink-0 text-blue-700">
                         Copy <i className="fa-brands fa-linkedin mx-2"></i> Link
                     </Button>
                 </div>
                 <div className="flex space-x-2">
                     <Input value={userInfo.twitterLink} readOnly />
-                    <Button onClick={() => handleCopyUrl(userInfo.twitterLink)} variant="secondary" className="shrink-0 text-blue-900">
+                    <Button onClick={() => handleCopyUrl(userInfo.twitterLink!)} variant="secondary" className="shrink-0 text-blue-900">
                         Copy <i className="fa-brands fa-twitter mx-2 "></i> Link
                     </Button>
                 </div>

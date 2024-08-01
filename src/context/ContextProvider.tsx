@@ -8,7 +8,7 @@ import {
     updateProfile as firebaseUpdateProfile
 } from 'firebase/auth';
 import { auth, githubProvider, googleProvider } from '@/config/firebaseConfig';
-import { photoMeta, userDefaultInfo, UserInfo } from './types';
+import { userDefaultInfo, UserInfo } from './types';
 import { OutputFileEntry } from '@uploadcare/react-uploader';
 
 

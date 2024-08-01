@@ -1,5 +1,5 @@
 import { createContext, useContext } from "react"
-import { photoMeta, userDefaultInfo, UserInfo } from "./types";
+import { userDefaultInfo, UserInfo } from "./types";
 import { OutputFileEntry } from "@uploadcare/react-uploader";
 
 

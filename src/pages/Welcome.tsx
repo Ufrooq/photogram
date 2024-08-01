@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button'
 import mesh_img from "../assets/undraw_landing_page_re_6xev.svg"
-import { Navigate, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 const Welcome = () => {
     const navigate = useNavigate()

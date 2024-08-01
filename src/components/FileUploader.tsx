@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { OutputFileEntry } from '@uploadcare/blocks';
 import { FileUploaderRegular, type UploadCtxProvider } from '@uploadcare/react-uploader';
 import '@uploadcare/react-uploader/core.css';

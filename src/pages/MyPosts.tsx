@@ -1,7 +1,7 @@
 import { auth } from '@/config/firebaseConfig';
 import { post, responseDocument } from '@/context/types';
 import { getPostsById } from '@/services/post.service';
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useAuthState } from 'react-firebase-hooks/auth';
 
 

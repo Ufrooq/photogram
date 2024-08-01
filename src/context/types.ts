@@ -1,7 +1,4 @@
-import { auth } from "@/config/firebaseConfig";
 import { OutputFileEntry } from "@uploadcare/react-uploader";
-import { useAuthState } from "react-firebase-hooks/auth";
-const [user] = useAuthState(auth);
 import { User } from 'firebase/auth';
 
 
