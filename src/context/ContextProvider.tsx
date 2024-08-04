@@ -1,4 +1,4 @@
-import { ReactNode, useState } from 'react'
+import { ReactNode, useEffect, useState } from 'react'
 import { AuthContext_type, Globalcontext } from './Context';
 import {
     createUserWithEmailAndPassword,
@@ -8,8 +8,10 @@ import {
     updateProfile as firebaseUpdateProfile
 } from 'firebase/auth';
 import { auth, githubProvider, googleProvider } from '@/config/firebaseConfig';
-import { userDefaultInfo, UserInfo } from './types';
+import { userCompleteInfoResponse, userDefaultInfo, UserInfo } from './types';
 import { OutputFileEntry } from '@uploadcare/react-uploader';
+import { getUserProfile } from '@/services/user.service';
+import { useAuthState } from 'react-firebase-hooks/auth';
 
 
 
@@ -18,8 +20,9 @@ const ContextProvider = ({ children }: { children: ReactNode }) => {
 
 
     const [isLoggedIn, setisLoggedIn] = useState<boolean>(false)
-    const [currentUser, setcurrentUser] = useState<any>()
     const [files, setFiles] = useState<OutputFileEntry[]>();
+    const [user] = useAuthState(auth);
+    const [currentUserInfo, setCurrentUserInfo] = useState<userCompleteInfoResponse>();
 
 
     const continueWithGoogle = async () => {
@@ -58,14 +61,6 @@ const ContextProvider = ({ children }: { children: ReactNode }) => {
     }
 
 
-    onAuthStateChanged(auth, (user) => {
-        if (user) {
-            setcurrentUser(user);
-        } else {
-            console.log("user not found !")
-        }
-    })
-
     const updateProfile = (info: userDefaultInfo) => {
         try {
             return firebaseUpdateProfile(info.user!, {
@@ -76,15 +71,31 @@ const ContextProvider = ({ children }: { children: ReactNode }) => {
             console.log(error)
         }
     }
+    const fetchUser = async (userId: string) => {
+        try {
+            const data: userCompleteInfoResponse | any = await getUserProfile(userId);
+            console.log(data)
+            if (data) {
+                setCurrentUserInfo(data)
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    useEffect(() => {
+        fetchUser(user?.uid!);
+    }, [user])
+
 
 
     const contextValues: AuthContext_type = {
         // states ------->
         isLoggedIn,
         setisLoggedIn,
-        currentUser,
         files,
         setFiles,
+        currentUserInfo,
 
         // functions ---------->
         registerUser,

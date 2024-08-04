@@ -69,3 +69,21 @@ export interface userCompleteInfoResponse {
     linkedInLink?: string;
 }
 
+
+
+export interface commentI {
+    authorId: string,
+    authorPhotoURL: string,
+    authorUsername: string,
+    postId: string,
+    commentText: string
+}
+
+export interface commentResponseI {
+    id: string,
+    authorId: string,
+    authorPhotoURL?: string,
+    authorUsername?: string,
+    postId: string,
+    commentText: string
+}

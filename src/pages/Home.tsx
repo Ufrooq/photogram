@@ -47,7 +47,6 @@ const Home: React.FC = () => {
             const response = await getAllUsers() as userCompleteInfoResponse[];
             if (response.length > 0) {
                 setsuggestedFriends(response)
-                console.log(response)
             }
             else {
                 // setnoPostsBanner(true)

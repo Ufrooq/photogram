@@ -80,7 +80,7 @@ const Post = ({ username, userPhotoUrl, postId, caption, image, userLinks }: pos
                         </button>
                     }
                     {/* <button> */}
-                    <CommentDialogue />
+                    <CommentDialogue postId={postId} />
                     {/* </button> */}
                     <button>
                         <i className="fa-regular fa-paper-plane"></i>
