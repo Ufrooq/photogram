@@ -29,7 +29,8 @@ const CommentDialogue = ({ postId }: { postId: string }) => {
                 commentText: comment
             }
             await addComment(comment_to_add);
-            console.log(comment_to_add)
+            setComment("");
+            fetchOtherComments(postId)
             toast.success("Comment added successfully !")
         } else {
             toast.error("Please enter your comment !")
@@ -40,7 +41,6 @@ const CommentDialogue = ({ postId }: { postId: string }) => {
     const fetchOtherComments = async (postId: string) => {
         try {
             const response = await getComments(postId) as commentResponseI[];
-            console.log(response)
             if (response.length > 0) {
                 setOtherComments(response)
             }
@@ -50,7 +50,8 @@ const CommentDialogue = ({ postId }: { postId: string }) => {
         } catch (error) {
             console.log(error)
         }
-    }
+    };
+
 
     useEffect(() => {
         fetchOtherComments(postId!)
