@@ -1,3 +1,4 @@
+import Loader from "@/components/Loader"
 import { Button } from "@/components/ui/button"
 import {
     Card,
@@ -17,6 +18,7 @@ import { toast } from "sonner"
 
 const Login = () => {
     const { loginUser, setisLoggedIn, continueWithGoogle } = useGlobalContext()
+    const [isLoading, setIsLoading] = useState(false);
     const [userInfo, setuserInfo] = useState({
         email: "",
         password: "",
@@ -51,11 +53,13 @@ const Login = () => {
                 toast.error("Please fill all the required fileds !")
                 return
             }
+            setIsLoading(true)
             const response = await loginUser(userInfo)
             if (response) {
                 setisLoggedIn(true)
                 navigate("/home")
             }
+            setIsLoading(false)
         } catch (error) {
             console.log(error)
         }
@@ -98,7 +102,11 @@ const Login = () => {
                         <Label htmlFor="password">Password</Label>
                         <Input onChange={handleonChange} id="password" type="password" />
                     </div>
-                    <Button className="w-full" type="submit" variant="custom">Login</Button>
+                    <Button className="w-full" type="submit" variant="custom">
+                        {
+                            isLoading ? <Loader size="2" /> : "Login"
+                        }
+                    </Button>
                 </form>
                 <div className="relative">
                     <div className="absolute inset-0 flex items-center">

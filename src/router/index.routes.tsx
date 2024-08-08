@@ -1,7 +1,6 @@
 import MainLayout from "@/layouts/MainLayout";
 import { AUTH_ROUTES, PROTECTED_ROUTES, UNPROTECTED_ROUTES } from "./routes.constant";
-import Welcome from "@/pages/Welcome";
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, Navigate } from "react-router-dom";
 import About from "@/pages/About";
 import Error from "@/pages/Error";
 import AuthLayout from "@/layouts/AuthLayout";
@@ -16,14 +15,15 @@ import UpdateProfile from "@/pages/UpdateProfile";
 import ProfileInfo from "@/pages/ProfileInfo";
 import Friends from "@/pages/Friends";
 
+
 const RouterMain = createBrowserRouter([
     {
         path: UNPROTECTED_ROUTES.welcomePage,
         element: <MainLayout />,
         children: [
             {
-                index: true,
-                element: <Welcome />
+                path: '/',
+                element: <Navigate to={AUTH_ROUTES.loginPage} replace />,
             },
             {
                 path: UNPROTECTED_ROUTES.aboutPage,
@@ -84,7 +84,11 @@ const RouterMain = createBrowserRouter([
             }
 
         ]
-    }
+    },
+    {
+        path: '/',
+        element: <Navigate to={AUTH_ROUTES.loginPage} replace />,
+    },
 ])
 
 export default RouterMain;
