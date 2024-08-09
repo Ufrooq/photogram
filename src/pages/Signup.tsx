@@ -17,7 +17,7 @@ import { Link, useNavigate } from "react-router-dom"
 import { toast } from "sonner"
 
 const Signup: React.FC = () => {
-    const { registerUser, setisLoggedIn, continueWithGoogle } = useGlobalContext();
+    const { registerUser, setisLoggedIn, continueWithGoogle, sendVerificationEmail, isSendingVerificationEmail } = useGlobalContext();
     const [isLoading, setIsLoading] = useState(false);
     const [userInfo, setuserInfo] = useState({
         email: "",
@@ -60,6 +60,7 @@ const Signup: React.FC = () => {
             }
             const response = await registerUser(userInfo)
             if (response) {
+                sendVerificationEmail();
                 setisLoggedIn(true)
                 navigate("/home")
             }
@@ -111,9 +112,9 @@ const Signup: React.FC = () => {
                         <Label htmlFor="password">Confirm Password</Label>
                         <Input onChange={handleonChange} id="confirmPassword" type="password" />
                     </div>
-                    <Button className="w-full" type="submit" variant="custom">
+                    <Button className="w-full" type="submit" variant="custom" disabled={isSendingVerificationEmail}>
                         {
-                            isLoading ? <Loader size="2" /> : "Create Account"
+                            isLoading ? < Loader size="2" /> : "Create Account"
                         }
                     </Button>
                 </form>

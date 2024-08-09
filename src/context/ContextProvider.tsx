@@ -5,14 +5,16 @@ import {
     signInWithEmailAndPassword,
     signInWithPopup,
     onAuthStateChanged,
+    sendEmailVerification,
+    User,
     updateProfile as firebaseUpdateProfile
 } from 'firebase/auth';
 import { auth, githubProvider, googleProvider } from '@/config/firebaseConfig';
 import { userCompleteInfoResponse, userDefaultInfo, UserInfo } from './types';
 import { OutputFileEntry } from '@uploadcare/react-uploader';
 import { getUserProfile } from '@/services/user.service';
-import { useAuthState } from 'react-firebase-hooks/auth';
 import LoadingState from '@/components/LoadingState';
+
 
 
 
@@ -24,6 +26,8 @@ const ContextProvider = ({ children }: { children: ReactNode }) => {
     const [isLoading, setIsLoading] = useState<boolean>(true)
     const [files, setFiles] = useState<OutputFileEntry[]>();
     const [currentUserInfo, setCurrentUserInfo] = useState<userCompleteInfoResponse>();
+    const [isSendingVerificationEmail, setIsSendingVerificationEmail] =
+        useState<boolean>(false);
 
 
     const continueWithGoogle = async () => {
@@ -72,10 +76,17 @@ const ContextProvider = ({ children }: { children: ReactNode }) => {
             console.log(error)
         }
     }
+
+    const sendVerificationEmail = async () => {
+        setIsSendingVerificationEmail(true);
+        const res = await sendEmailVerification(auth.currentUser as User);
+        console.log("res : ", res)
+        setIsSendingVerificationEmail(false);
+    };
+
     const fetchUser = async (userId: string) => {
         try {
             const data: userCompleteInfoResponse | any = await getUserProfile(userId);
-            console.log(data)
             if (data) {
                 setCurrentUserInfo(data)
                 setisLoggedIn(true);
@@ -88,7 +99,8 @@ const ContextProvider = ({ children }: { children: ReactNode }) => {
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
-            if (user) {
+            if (user && !isSendingVerificationEmail) {
+                console.log("0000000000000000")
                 setisLoggedIn(true);
                 fetchUser(user.uid);
             } else {
@@ -108,13 +120,16 @@ const ContextProvider = ({ children }: { children: ReactNode }) => {
         files,
         setFiles,
         currentUserInfo,
+        isSendingVerificationEmail,
+        setIsSendingVerificationEmail,
 
         // functions ---------->
         registerUser,
         loginUser,
         continueWithGithub,
         continueWithGoogle,
-        updateProfile
+        updateProfile,
+        sendVerificationEmail
     }
 
 

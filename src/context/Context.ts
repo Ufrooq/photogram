@@ -11,10 +11,13 @@ export interface AuthContext_type {
     loginUser: (data: UserInfo) => Promise<any>;
     continueWithGithub: () => Promise<any>;
     continueWithGoogle: () => Promise<any>;
+    sendVerificationEmail: () => Promise<any>;
     files: OutputFileEntry[] | undefined;
     setFiles: React.Dispatch<React.SetStateAction<OutputFileEntry[] | undefined>>;
     updateProfile: (info: userDefaultInfo) => Promise<any> | undefined;
     currentUserInfo: userCompleteInfoResponse | undefined;
+    isSendingVerificationEmail: boolean;
+    setIsSendingVerificationEmail: React.Dispatch<React.SetStateAction<boolean>>;
     // setcurrentUser: React.Dispatch<any>;
 }
 
