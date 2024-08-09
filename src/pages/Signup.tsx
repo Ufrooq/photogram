@@ -11,12 +11,14 @@ import { Icons } from "@/components/ui/icons"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useGlobalContext } from "@/context/Context"
+import { Loader } from "lucide-react"
 import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { toast } from "sonner"
 
 const Signup: React.FC = () => {
     const { registerUser, setisLoggedIn, continueWithGoogle } = useGlobalContext();
+    const [isLoading, setIsLoading] = useState(false);
     const [userInfo, setuserInfo] = useState({
         email: "",
         password: "",
@@ -32,13 +34,14 @@ const Signup: React.FC = () => {
 
     async function signupWithGoogle() {
         try {
+            setIsLoading(true)
             const response = await continueWithGoogle();
             if (response) {
                 setisLoggedIn(true)
                 toast.success("Signed up successfully !")
                 navigate("/home")
             }
-
+            setIsLoading(false)
         } catch (error) {
             console.log(error)
         }
@@ -108,7 +111,11 @@ const Signup: React.FC = () => {
                         <Label htmlFor="password">Confirm Password</Label>
                         <Input onChange={handleonChange} id="confirmPassword" type="password" />
                     </div>
-                    <Button className="w-full" type="submit" variant="custom">Create account</Button>
+                    <Button className="w-full" type="submit" variant="custom">
+                        {
+                            isLoading ? <Loader size="2" /> : "Create Account"
+                        }
+                    </Button>
                 </form>
                 <div className="relative">
                     <div className="absolute inset-0 flex items-center">

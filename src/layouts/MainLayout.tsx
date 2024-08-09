@@ -1,9 +1,13 @@
+import ContextProvider from '@/context/ContextProvider'
 import { Outlet } from 'react-router-dom'
 
 const MainLayout = () => {
+
     return (
         <>
-            <Outlet />
+            <ContextProvider>
+                <Outlet />
+            </ContextProvider >
         </>
     )
 }

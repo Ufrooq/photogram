@@ -18,7 +18,6 @@ import Friends from "@/pages/Friends";
 
 const RouterMain = createBrowserRouter([
     {
-        path: UNPROTECTED_ROUTES.welcomePage,
         element: <MainLayout />,
         children: [
             {

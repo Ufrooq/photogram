@@ -5,8 +5,8 @@ import { OutputFileEntry } from "@uploadcare/react-uploader";
 
 
 export interface AuthContext_type {
-    isLoggedIn: boolean
-    setisLoggedIn: React.Dispatch<React.SetStateAction<boolean>>
+    isLoggedIn: boolean | null
+    setisLoggedIn: React.Dispatch<React.SetStateAction<boolean | null>>
     registerUser: (data: UserInfo) => Promise<any>;
     loginUser: (data: UserInfo) => Promise<any>;
     continueWithGithub: () => Promise<any>;

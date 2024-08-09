@@ -12,6 +12,7 @@ import { userCompleteInfoResponse, userDefaultInfo, UserInfo } from './types';
 import { OutputFileEntry } from '@uploadcare/react-uploader';
 import { getUserProfile } from '@/services/user.service';
 import { useAuthState } from 'react-firebase-hooks/auth';
+import LoadingState from '@/components/LoadingState';
 
 
 
@@ -19,7 +20,8 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 const ContextProvider = ({ children }: { children: ReactNode }) => {
 
 
-    const [isLoggedIn, setisLoggedIn] = useState<boolean>(false)
+    const [isLoggedIn, setisLoggedIn] = useState<boolean | null>(null)
+    const [isLoading, setIsLoading] = useState<boolean>(true)
     const [files, setFiles] = useState<OutputFileEntry[]>();
     const [user] = useAuthState(auth);
     const [currentUserInfo, setCurrentUserInfo] = useState<userCompleteInfoResponse>();
@@ -77,16 +79,27 @@ const ContextProvider = ({ children }: { children: ReactNode }) => {
             console.log(data)
             if (data) {
                 setCurrentUserInfo(data)
+                setisLoggedIn(true);
             }
         } catch (error) {
             console.log(error)
         }
     }
 
-    useEffect(() => {
-        fetchUser(user?.uid!);
-    }, [user])
 
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
+            if (user) {
+                setisLoggedIn(true);
+                fetchUser(user.uid);
+            } else {
+                setisLoggedIn(false);
+            }
+            setIsLoading(false);
+        });
+
+        return () => unsubscribe();
+    }, []);
 
 
     const contextValues: AuthContext_type = {
@@ -108,7 +121,7 @@ const ContextProvider = ({ children }: { children: ReactNode }) => {
 
     return (
         <Globalcontext.Provider value={contextValues}>
-            {children}
+            {isLoading ? <LoadingState /> : children}
         </Globalcontext.Provider>
     )
 }

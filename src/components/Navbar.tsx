@@ -4,16 +4,19 @@ import { useNavigate } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "@/config/firebaseConfig";
 import { toast } from "sonner";
+import { useGlobalContext } from "@/context/Context";
 
 const Navbar = () => {
     const navigate = useNavigate()
 
     const [showDialogue, setshowDialogue] = useState<boolean>(false);
     const [user] = useAuthState(auth);
+    const { setisLoggedIn } = useGlobalContext()
     const handleSignOut = async () => {
         try {
             toast.success("Signed out successfully !")
             await auth.signOut()
+            setisLoggedIn(false)
         } catch (error) {
             console.log(error)
         }

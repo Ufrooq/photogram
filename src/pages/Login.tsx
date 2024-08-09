@@ -11,13 +11,17 @@ import {
 import { Icons } from "@/components/ui/icons"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { auth } from "@/config/firebaseConfig"
 import { useGlobalContext } from "@/context/Context"
-import { useState } from "react"
+
+import { useEffect, useState } from "react"
+import { useAuthState } from "react-firebase-hooks/auth"
 import { Link, useNavigate } from "react-router-dom"
 import { toast } from "sonner"
 
 const Login = () => {
-    const { loginUser, setisLoggedIn, continueWithGoogle } = useGlobalContext()
+    const { loginUser, isLoggedIn, setisLoggedIn, continueWithGoogle } = useGlobalContext()
+    const [user] = useAuthState(auth)
     const [isLoading, setIsLoading] = useState(false);
     const [userInfo, setuserInfo] = useState({
         email: "",
@@ -57,7 +61,6 @@ const Login = () => {
             const response = await loginUser(userInfo)
             if (response) {
                 setisLoggedIn(true)
-                navigate("/home")
             }
             setIsLoading(false)
         } catch (error) {
@@ -66,7 +69,11 @@ const Login = () => {
 
     }
 
-
+    useEffect(() => {
+        if (isLoggedIn) {
+            navigate("/home");
+        }
+    }, [isLoggedIn, navigate]);
 
     return (
         <Card className="shadow-lg">
