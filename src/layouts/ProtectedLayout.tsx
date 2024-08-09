@@ -4,6 +4,7 @@ import { Navigate, Outlet } from 'react-router-dom'
 import { useAuthState } from "react-firebase-hooks/auth";
 import Navbar from '@/components/Navbar';
 import Sidebar from '@/components/Sidebar';
+import LoadingState from '@/components/LoadingState';
 
 const ProtectedLayout: React.FC = () => {
     const auth = getAuth();
@@ -11,8 +12,8 @@ const ProtectedLayout: React.FC = () => {
 
     if (loading) {
         return (
-            <div>
-                <h1 className='text-4xl'>.....Loading</h1>
+            <div className='w-full h-full flex justify-center items-center'>
+                <LoadingState />
             </div>
         )
     }
