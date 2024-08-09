@@ -5,6 +5,8 @@ import People from '@/components/People'
 import { responseDocument, userCompleteInfoResponse } from '@/context/types'
 import { getposts } from '@/services/post.service'
 import { getAllUsers } from '@/services/user.service'
+import PostSkeleton from '@/Skeletons/PostSkeleton'
+import PeopleSkeleton from '@/Skeletons/PeopleSkeleton'
 
 const Home: React.FC = () => {
     // const [user] = useAuthState(auth);
@@ -56,7 +58,7 @@ const Home: React.FC = () => {
         }
     }
 
-
+    const skeletonElemets = [...Array(10).keys()];
     useEffect(() => {
         fetchAllPosts();
         fetchAllSuggestedUsers();
@@ -81,7 +83,7 @@ const Home: React.FC = () => {
                     <CarouselNext />
                 </Carousel>
                 <div className='p-2 mt-6 flex flex-col justify-center items-center'>
-                    {data &&
+                    {data.length > 0 &&
                         data.map((post: responseDocument) => {
                             return (
                                 <Post
@@ -95,7 +97,14 @@ const Home: React.FC = () => {
                                     userLinks={post.userLinks}
                                 />
                             )
-                        })}
+                        })
+                    }
+
+                    {data.length == 0 &&
+                        skeletonElemets.map(() => (
+                            <PostSkeleton />
+                        ))
+                    }
                 </div>
             </div>
 
@@ -106,6 +115,10 @@ const Home: React.FC = () => {
                 {suggestedFriends.length > 0
                     &&
                     <People suggestedFriends={suggestedFriends} />
+                }
+                {
+                    suggestedFriends.length == 0 &&
+                    <PeopleSkeleton />
                 }
             </div>
         </div>

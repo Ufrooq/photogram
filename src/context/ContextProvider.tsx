@@ -23,7 +23,6 @@ const ContextProvider = ({ children }: { children: ReactNode }) => {
     const [isLoggedIn, setisLoggedIn] = useState<boolean | null>(null)
     const [isLoading, setIsLoading] = useState<boolean>(true)
     const [files, setFiles] = useState<OutputFileEntry[]>();
-    const [user] = useAuthState(auth);
     const [currentUserInfo, setCurrentUserInfo] = useState<userCompleteInfoResponse>();
 
 
