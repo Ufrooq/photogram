@@ -56,6 +56,7 @@ const ContextProvider = ({ children }: { children: ReactNode }) => {
             console.log(error);
         }
     }
+
     const registerUser = async (data: UserInfo) => {
         try {
             const response = await createUserWithEmailAndPassword(auth, data.email, data.password);

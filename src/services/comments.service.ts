@@ -7,7 +7,9 @@ import { addDoc, collection, getDocs, orderBy, query, where } from "firebase/fir
 
 export const addComment = async (comment: commentI) => {
     try {
-        await addDoc(collection(database, COLLECTION_NAMES.COMMENTS), comment);
+        console.log(comment)
+        const res = await addDoc(collection(database, COLLECTION_NAMES.COMMENTS), comment);
+        console.log(res)
     } catch (error) {
         console.log(error)
     }
@@ -19,7 +21,7 @@ export const getComments = async (postId: string) => {
     const tempArr: commentResponseI[] = [];
     try {
         const q = query(collection(database, COLLECTION_NAMES.COMMENTS), where("postId", "==", postId))
-        const querySnapshot = await getDocs(q)
+        const querySnapshot = await getDocs(q);
 
         if (querySnapshot.size > 0) {
             querySnapshot.forEach((doc) => {

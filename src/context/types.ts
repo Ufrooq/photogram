@@ -80,7 +80,7 @@ export interface commentI {
 }
 
 export interface commentResponseI {
-    id: string,
+    id?: string,
     authorId: string,
     authorPhotoURL?: string,
     authorUsername?: string,

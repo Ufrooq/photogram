@@ -2,20 +2,19 @@ import FileUploader from '@/components/FileUploader'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
-import { auth } from '@/config/firebaseConfig'
 import { useGlobalContext } from '@/context/Context'
 import { userCompleteInfo, userDefaultInfo } from '@/context/types'
+import useAuth from '@/hooks/useAuthHook'
 import { updateUserInfoONPost } from '@/services/post.service'
 import { createUserProfile, updateUserProfile } from '@/services/user.service'
 import { Label } from '@radix-ui/react-label'
 import { OutputFileEntry } from '@uploadcare/react-uploader'
 import { useEffect, useState } from 'react'
-import { useAuthState } from 'react-firebase-hooks/auth'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
 
 const UpdateProfile = () => {
-    const [user] = useAuthState(auth);
+    const { user } = useAuth();
     const navigate = useNavigate();
     const location = useLocation();
     const { updateProfile } = useGlobalContext()

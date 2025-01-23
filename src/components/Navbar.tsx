@@ -5,12 +5,13 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "@/config/firebaseConfig";
 import { toast } from "sonner";
 import { useGlobalContext } from "@/context/Context";
+import useAuth from "@/hooks/useAuthHook";
 
 const Navbar = () => {
     const navigate = useNavigate()
 
     const [showDialogue, setshowDialogue] = useState<boolean>(false);
-    const [user] = useAuthState(auth);
+    const { user } = useAuth();
     const { setisLoggedIn } = useGlobalContext()
     const handleSignOut = async () => {
         try {

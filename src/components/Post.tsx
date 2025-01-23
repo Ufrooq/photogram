@@ -23,7 +23,7 @@ interface postProps {
 
 const Post = ({ username, userPhotoUrl, postId, caption, image, userLinks }: postProps) => {
 
-    const [user] = useAuthState(auth);
+    const { user, isLoading } = useAuth();
     const userId: string | any = user?.uid
     const [postLikes, setpostLikes] = useState<string[]>(userLinks);
 

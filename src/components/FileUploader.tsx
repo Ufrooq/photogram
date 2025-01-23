@@ -40,7 +40,8 @@ function FileUploader({ files, onChange, previewUploadedImages }: FileUploaderPr
     return (
         <div className='flex flex-col gap-4'>
             <div className='flex w-full items-center p-4 text-lg'>
-                {previewUploadedImages && <Label className='text-md w-[16%] font-medium text-slate-700'>Upload a Picture : </Label>}                <FileUploaderRegular
+                {previewUploadedImages && <Label className='text-md w-[16%] font-medium text-slate-700'>Upload a Picture : </Label>}
+                <FileUploaderRegular
                     imgOnly
                     multiple
                     removeCopyright

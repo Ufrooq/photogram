@@ -1,17 +1,16 @@
 import FileUploader from '@/components/FileUploader';
 import { Button } from '@/components/ui/button';
-import { auth } from '@/config/firebaseConfig';
 import { photoMeta, post } from '@/context/types';
+import useAuth from '@/hooks/useAuthHook';
 import { createPost } from '@/services/post.service';
 import { OutputFileEntry } from '@uploadcare/react-uploader';
 import { useState } from 'react';
-import { useAuthState } from 'react-firebase-hooks/auth';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 
 
 const CreatePost = () => {
-    const [user] = useAuthState(auth);
+    const { user } = useAuth();
     const [fileEntry, setFileEntry] = useState<OutputFileEntry[]>([]);
     const navigate = useNavigate()
     const [post, setpost] = useState<post>({

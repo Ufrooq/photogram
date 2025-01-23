@@ -1,12 +1,11 @@
-import { auth } from '@/config/firebaseConfig';
 import { post, responseDocument } from '@/context/types';
+import useAuth from '@/hooks/useAuthHook';
 import { getPostsById } from '@/services/post.service';
 import { useEffect, useState } from 'react'
-import { useAuthState } from 'react-firebase-hooks/auth';
 
 
 const MyPosts = () => {
-    const [user] = useAuthState(auth);
+    const { user } = useAuth();
     const [data, setdata] = useState<responseDocument[]>([])
     const [noPostsBanner, setnoPostsBanner] = useState<boolean>(false)
 

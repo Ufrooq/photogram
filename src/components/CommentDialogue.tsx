@@ -3,40 +3,59 @@ import { Textarea } from './ui/textarea'
 import { Button } from './ui/button'
 import { Label } from '@radix-ui/react-label'
 import { Avatar, AvatarImage } from '@radix-ui/react-avatar'
-import { useEffect, useState } from 'react'
-import { useAuthState } from 'react-firebase-hooks/auth'
-import { auth } from '@/config/firebaseConfig'
+import { useEffect, useRef, useState } from 'react'
 import { commentI, commentResponseI } from '@/context/types'
 import { useGlobalContext } from '@/context/Context'
 import { toast } from 'sonner'
 import { addComment, getComments } from '@/services/comments.service'
+import { ScrollArea } from './ui/scroll-area'
+import useAuth from '@/hooks/useAuthHook'
 
 const CommentDialogue = ({ postId }: { postId: string }) => {
     const [comment, setComment] = useState<string>("");
-    const [user] = useAuthState(auth)
+    const { user } = useAuth();
     const { currentUserInfo } = useGlobalContext();
     const [otherComments, setOtherComments] = useState<commentResponseI[]>([])
-
+    const commentsEndRef = useRef<HTMLDivElement>(null);
+    const [commenting, setCommenting] = useState(false)
 
     const handleSubmit = async (e: any) => {
         e.preventDefault();
-        if (comment != "") {
-            const comment_to_add: commentI = {
-                authorId: user?.uid!,
-                authorPhotoURL: currentUserInfo?.photoURL!,
-                authorUsername: currentUserInfo?.displayName!,
-                postId: postId,
-                commentText: comment
-            }
-            await addComment(comment_to_add);
-            setComment("");
-            fetchOtherComments(postId)
-            toast.success("Comment added successfully !")
-        } else {
+        if (comment == "") {
             toast.error("Please enter your comment !")
+
+        } else {
+            setCommenting(true);
+            try {
+                const comment_to_add: commentI = {
+                    authorId: user?.uid!,
+                    authorPhotoURL: currentUserInfo?.photoURL || "",
+                    authorUsername: currentUserInfo?.displayName || "",
+                    postId: postId,
+                    commentText: comment
+                }
+
+                await addComment(comment_to_add);
+                setOtherComments([...otherComments, comment_to_add])
+                setComment("");
+                // fetchOtherComments(postId)
+                toast.success("Comment added successfully !")
+            } catch (error) {
+                console.log(error)
+                toast.error("An error occured while adding your comment !")
+            } finally {
+                setCommenting(false);
+            }
+
         }
 
     }
+
+    useEffect(() => {
+        if (commentsEndRef.current) {
+            commentsEndRef.current.scrollIntoView({ behavior: 'smooth' });
+        }
+    }, [otherComments]);
 
     const fetchOtherComments = async (postId: string) => {
         try {
@@ -66,10 +85,10 @@ const CommentDialogue = ({ postId }: { postId: string }) => {
             </DialogTrigger>
             <DialogContent>
                 {otherComments.length > 0 ?
-                    <div className='pr-4 pt-4'>
-                        <div className='space-y-6 max-h-[400px] overflow-y-scroll'>
+                    <ScrollArea className='max-h-[320px] py-6'>
+                        <div className='space-y-6'>
                             {otherComments.map((comment) => (
-                                <div className='space-y-2'>
+                                <div className='space-y-1'>
                                     <div className="flex items-center space-x-2">
                                         <Avatar className='bg-black rounded-full w-8 h-8 overflow-hidden'>
                                             <AvatarImage className='h-full' src={comment.authorPhotoURL} />
@@ -84,7 +103,8 @@ const CommentDialogue = ({ postId }: { postId: string }) => {
                                 </div>
                             ))}
                         </div>
-                    </div>
+                        <div ref={commentsEndRef}></div>
+                    </ScrollArea>
                     :
                     <h1 className='font-bold text-xl'>No Comments Found !</h1>
                 }
@@ -92,13 +112,16 @@ const CommentDialogue = ({ postId }: { postId: string }) => {
                     <Label>Add your comment below : </Label>
                     <div className='mb-4 mt-3'>
                         <Textarea
+                            value={comment}
                             onChange={(e: any) => setComment(e.target.value)}
                             placeholder={otherComments.length > 0 ? "Enter your thoughts.." : "Be the First to comment"}
                         />
                     </div>
-                    <Button type="submit" variant={"custom"} className='ms-auto'>Submit</Button>
+                    <Button type="submit" variant={"custom"} className='ms-auto'>
+                        {commenting ? "Commenting..." : "Comment"}
+                    </Button>
                 </form>
-            </DialogContent>
+            </DialogContent >
         </Dialog >
     )
 }
