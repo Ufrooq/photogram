@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  # Photogram -> React + Firebase App 
+  react-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - VITE_APIKEYS=${VITE_APIKEYS}
+        - VITE_AUTHDOMAIN=${VITE_AUTHDOMAIN}
+        - VITE_PROJECTEDID=${VITE_PROJECTEDID}
+        - VITE_STORAGEBUCKET=${VITE_STORAGEBUCKET}
+        - VITE_MESSAGINGSENDERID=${VITE_MESSAGINGSENDERID}
+        - VITE_APPID=${VITE_APPID}
+    container_name: react-firebase-app
+    ports:
+      - "80:80"
+    restart: always
+    volumes:
+      - firebase-config:/usr/share/nginx/html/firebase-config
+    networks:
+      - app-network
+    env_file:
+      - .env
+
+  dummy-db:
+    image: mysql:8.0
+    container_name: dummy-mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: dummyroot
+      MYSQL_DATABASE: dummydb
+      MYSQL_USER: dummyuser
+      MYSQL_PASSWORD: dummypassword
+    volumes:
+      - db-data:/var/lib/mysql
+    networks:
+      - app-network
+
+volumes:
+  firebase-config:
+    driver: local
+  db-data:   
+    driver: local
+
+networks:
+  app-network:
+    driver: bridge

@@ -2,10 +2,9 @@ import { useEffect, useState } from 'react'
 import { Card } from './ui/card'
 import { Avatar, AvatarImage } from '@radix-ui/react-avatar'
 import { Separator } from './ui/separator'
-import { useAuthState } from 'react-firebase-hooks/auth'
-import { auth } from '@/config/firebaseConfig'
 import { updateLikes } from '@/services/post.service'
 import CommentDialogue from './CommentDialogue'
+import useAuth from '@/hooks/useAuthHook'
 
 
 
@@ -23,7 +22,7 @@ interface postProps {
 
 const Post = ({ username, userPhotoUrl, postId, caption, image, userLinks }: postProps) => {
 
-    const { user, isLoading } = useAuth();
+    const { user } = useAuth();
     const userId: string | any = user?.uid
     const [postLikes, setpostLikes] = useState<string[]>(userLinks);
 

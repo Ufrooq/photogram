@@ -1,13 +1,12 @@
 import { database } from "@/config/firebaseConfig";
 import { COLLECTION_NAMES } from "@/context/constants";
 import { commentI, commentResponseI } from "@/context/types";
-import { addDoc, collection, getDocs, orderBy, query, where } from "firebase/firestore";
+import { addDoc, collection, getDocs, query, where } from "firebase/firestore";
 
 
 
 export const addComment = async (comment: commentI) => {
     try {
-        console.log(comment)
         const res = await addDoc(collection(database, COLLECTION_NAMES.COMMENTS), comment);
         console.log(res)
     } catch (error) {

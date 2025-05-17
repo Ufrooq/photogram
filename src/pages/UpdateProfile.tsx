@@ -19,11 +19,12 @@ const UpdateProfile = () => {
     const location = useLocation();
     const { updateProfile } = useGlobalContext()
 
-    const { id, userId, displayName, photoURL, userBio, faceBookLink, twitterLink, linkedInLink } = location.state
+    const { userId, displayName, photoURL, userBio, faceBookLink, twitterLink, linkedInLink, email } = location.state
 
     const initialUserInfo: userCompleteInfo = {
         userId,
         displayName,
+        email,
         photoURL,
         userBio,
         faceBookLink,
@@ -40,8 +41,9 @@ const UpdateProfile = () => {
         e.preventDefault();
         try {
             // await updateUserProfile(id, data);
-            if (id) {
-                await updateUserProfile(id, data);
+            if (user.uid) {
+                console.log(user.uid)
+                await updateUserProfile({ ...data, userId: user.uid });
                 toast.success("Profile Updated successfully !")
                 navigate("/profile")
             } else {
@@ -59,6 +61,7 @@ const UpdateProfile = () => {
             updateProfile(profileInfo_for_firebaseUser);
             updateUserInfoONPost(profileInfo_for_firebaseUser)
         } catch (error) {
+            console.log(error)
             toast.error("Error occured while updating Profile !")
         }
     }
@@ -117,6 +120,16 @@ const UpdateProfile = () => {
                                         placeholder="Enter your name here"
                                         onChange={handleOnChange}
                                         value={data.displayName}
+                                    />
+                                </div>
+                                <div className="grid gap-2 w-[40%]">
+                                    <Label htmlFor="email">Name : </Label>
+                                    <Input
+                                        id="email"
+                                        type="text"
+                                        placeholder="Enter your email here"
+                                        onChange={handleOnChange}
+                                        value={data.email}
                                     />
                                 </div>
                                 <div className="grid gap-2">

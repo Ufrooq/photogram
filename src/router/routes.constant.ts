@@ -16,6 +16,7 @@ export const PROTECTED_ROUTES = {
     postsPage: "/posts",
     friendsListPage: "/friends",
     updateAccountInfo: "/update-profile",
+    inboxPage: "/inbox",
 
 }
 

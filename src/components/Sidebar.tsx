@@ -41,8 +41,8 @@ const Sidebar = () => {
             icon: "fa-bell"
         },
         {
-            name: "Direct",
-            link: "/",
+            name: "Inbox",
+            link: "/inbox",
             icon: "fa-inbox"
         },
         {

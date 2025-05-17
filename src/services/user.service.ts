@@ -57,10 +57,9 @@ export const getAllUsers = async () => {
 }
 
 export const updateUserProfile = (
-    id: string,
     userInfo: userCompleteInfo
 ) => {
-    const docRef = doc(database, COLLECTION_NAMES.USERS, id);
+    const docRef = doc(database, COLLECTION_NAMES.USERS, userInfo.userId!);
     return updateDoc(docRef, {
         ...userInfo
     });

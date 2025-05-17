@@ -1,7 +1,6 @@
 import { useState } from "react"
 import { Button } from "./ui/button";
 import { useNavigate } from "react-router-dom";
-import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "@/config/firebaseConfig";
 import { toast } from "sonner";
 import { useGlobalContext } from "@/context/Context";

@@ -1,0 +1,78 @@
+# Dependencies
+node_modules/               # Exclude node_modules to avoid copying dependencies
+npm-debug.log               # Debug logs aren't needed in the container
+yarn-error.log              # Yarn error logs
+yarn-debug.log              # Yarn debug logs
+.pnp/                       # Plug'n'Play files
+.pnp.js                     # Plug'n'Play JS file
+
+# Testing
+coverage/                   # Test coverage reports
+.nyc_output/               # Istanbul output
+__tests__/                  # Test directories
+*.test.js                   # Test files
+*.spec.js                   # Spec files
+
+# Build
+build/                      # Exclude local build directory
+dist/                       # Distribution directory
+.cache/                     # Cache directory
+.next/                      # Next.js build output
+
+# Environment variables and secrets
+.env                        # Environment variables
+.env.local                  # Local environment variables
+.env.development            # Development environment variables
+.env.development.local      # Local development environment variables
+.env.test                   # Test environment variables
+.env.test.local             # Local test environment variables
+.env.production             # Production environment variables
+.env.production.local       # Local production environment variables
+*.pem                       # PEM files (often contain keys)
+*.key                       # Key files
+
+# Version control
+.git/                       # Git directory
+.gitignore                  # Git ignore file
+.gitattributes              # Git attributes file
+.github/                    # GitHub specific files
+
+# IDE specific files
+.idea/                      # JetBrains IDEs
+.vscode/                    # Visual Studio Code
+*.swp                       # Vim swap files
+*.swo                       # Vim swap files
+*.sublime-*                 # Sublime Text files
+.DS_Store                   # macOS specific
+
+# Docker and deployment
+Dockerfile                  # No need to copy the Dockerfile itself
+docker-compose.yml          # Docker Compose file
+.dockerignore               # This file
+.dockerhub                  # Docker Hub configurations
+
+# Firebase specific
+.firebase/                  # Firebase cache directory
+firebase-debug.log          # Firebase debug logs
+firestore-debug.log         # Firestore debug logs
+database-debug.log          # Realtime Database debug logs
+ui-debug.log                # Firebase UI debug logs
+firebase-export-*           # Firebase exports
+*-firebase-adminsdk-*.json  # Firebase admin SDK service account keys
+
+# Documentation & misc
+README.md                   # README file
+CHANGELOG.md                # Changelog
+LICENSE                     # License file
+docs/                       # Documentation
+*.md                        # Markdown files except README.md
+examples/                   # Example files
+
+# Logs
+logs/                       # Log files
+*.log                       # Log files
+
+# Temporary files
+tmp/                        # Temporary directory
+temp/                       # Temporary directory
+.tmp/                       # Temporary directory

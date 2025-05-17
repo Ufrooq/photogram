@@ -60,9 +60,15 @@ const ContextProvider = ({ children }: { children: ReactNode }) => {
     const registerUser = async (data: UserInfo) => {
         try {
             const response = await createUserWithEmailAndPassword(auth, data.email, data.password);
-            return response
-        } catch (error) {
-            console.log(error);
+            return {
+                status: 400,
+                response: response
+            }
+        } catch (error: any) {
+            return {
+                status: 400,
+                message: error.message
+            };
         }
     }
 
@@ -101,7 +107,6 @@ const ContextProvider = ({ children }: { children: ReactNode }) => {
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
             if (user && !isSendingVerificationEmail) {
-                console.log("0000000000000000")
                 setisLoggedIn(true);
                 fetchUser(user.uid);
             } else {

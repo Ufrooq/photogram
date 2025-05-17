@@ -9,6 +9,7 @@ import {
     CardTitle,
 } from "@/components/ui/card"
 import { Icons } from "@/components/ui/icons"
+// import { Icons } from "@/components/ui/icons"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useGlobalContext } from "@/context/Context"
@@ -60,8 +61,9 @@ const Login = () => {
                 setisLoggedIn(true)
             }
             setIsLoading(false)
-        } catch (error) {
-            console.log(error)
+
+        } catch (error: any) {
+            toast.error(error)
         }
 
     }

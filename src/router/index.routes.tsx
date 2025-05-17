@@ -14,6 +14,7 @@ import AccountLayout from "@/layouts/AccountLayout";
 import UpdateProfile from "@/pages/UpdateProfile";
 import ProfileInfo from "@/pages/ProfileInfo";
 import Friends from "@/pages/Friends";
+import Inbox from "@/pages/Inbox";
 
 
 const RouterMain = createBrowserRouter([
@@ -63,6 +64,10 @@ const RouterMain = createBrowserRouter([
                     {
                         path: PROTECTED_ROUTES.friendsListPage,
                         element: <Friends />
+                    },
+                    {
+                        path: PROTECTED_ROUTES.inboxPage,
+                        element: <Inbox />
                     },
                     {
                         path: PROTECTED_ROUTES.profilePage,

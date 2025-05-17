@@ -56,6 +56,7 @@ export interface userCompleteInfo {
     faceBookLink?: string;
     twitterLink?: string;
     linkedInLink?: string;
+    email?: string;
 }
 
 export interface userCompleteInfoResponse {
@@ -67,6 +68,7 @@ export interface userCompleteInfoResponse {
     faceBookLink?: string;
     twitterLink?: string;
     linkedInLink?: string;
+    email?: string;
 }
 
 

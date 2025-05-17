@@ -8,6 +8,7 @@ import {
     CardTitle,
 } from "@/components/ui/card"
 import { Icons } from "@/components/ui/icons"
+// import { Icons } from "@/components/ui/icons"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useGlobalContext } from "@/context/Context"
@@ -17,7 +18,7 @@ import { Link, useNavigate } from "react-router-dom"
 import { toast } from "sonner"
 
 const Signup: React.FC = () => {
-    const { registerUser, setisLoggedIn, continueWithGoogle, sendVerificationEmail, isSendingVerificationEmail } = useGlobalContext();
+    const { registerUser, setisLoggedIn, sendVerificationEmail, isSendingVerificationEmail, continueWithGoogle } = useGlobalContext();
     const [isLoading, setIsLoading] = useState(false);
     const [userInfo, setuserInfo] = useState({
         email: "",
@@ -50,6 +51,7 @@ const Signup: React.FC = () => {
     const handleSubmit = async (e: any) => {
         e.preventDefault();
         try {
+            setIsLoading(true);
             if (userInfo.email == "" || userInfo.password == "" || userInfo.confirmPassword == "") {
                 toast.error("Please fill all the required fileds !")
                 return
@@ -59,14 +61,17 @@ const Signup: React.FC = () => {
                 return
             }
             const response = await registerUser(userInfo)
-            if (response) {
+            if (response.status == 200) {
                 sendVerificationEmail();
                 setisLoggedIn(true)
                 navigate("/home")
+            } else {
+                toast.error(response);
             }
-            console.log("response", response)
-        } catch (error) {
-            console.log(error)
+        } catch (error: any) {
+            toast.error(error)
+        } finally {
+            setIsLoading(false)
         }
 
 

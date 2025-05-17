@@ -34,6 +34,7 @@ const Home: React.FC = () => {
     const fetchAllPosts = async () => {
         try {
             const response = await getposts() as responseDocument[];
+            console.log(response)
             if (response.length > 0) {
                 setdata(response)
             }
