@@ -25,7 +25,7 @@ pipeline {
         stage('Build and Start Docker Compose') {
             steps {
                 dir('/var/lib/jenkins/DevOps/php/') {
-                    sh 'docker compose up -d --project-name thereactapp'
+                    sh 'docker-compose up -d'
                 }
             }
         }
